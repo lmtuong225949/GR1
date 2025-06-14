@@ -1,0 +1,70 @@
+.section {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.section h3 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.schedule-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #444;
+}
+
+.schedule-table tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s;
+}
+
+.schedule-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .schedule-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        min-width: 120px;
+    }
+}
+
+/* Loading and error states */
+.schedule-loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    color: #dc3545;
+    font-weight: 500;
+}

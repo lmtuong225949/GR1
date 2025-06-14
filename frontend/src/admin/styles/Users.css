@@ -1,0 +1,173 @@
+/* --- Không đổi phần này --- */
+.users-page {
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f5f7fa;
+  position: relative; /* thêm dòng này nếu cần */
+  z-index: 1;
+}
+
+.users-page h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.users-page .add-user-btn,
+.users-page > button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.users-page > button:hover {
+  background-color: #218838;
+}
+
+.users-page table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.users-page th,
+.users-page td {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.users-page th {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.users-page .edit-btn,
+.users-page .lock-btn,
+.users-page .delete-btn {
+  border: none;
+  padding: 6px 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.users-page .edit-btn {
+  color: #007bff;
+}
+
+.users-page .edit-btn:hover {
+  color: #0069d9;
+}
+
+.users-page .lock-btn {
+  color: #777777;
+}
+
+.users-page .lock-btn:hover {
+  color: #585757;
+}
+
+.users-page .delete-btn {
+  color: #ff4a4a;
+}
+
+.users-page .delete-btn:hover {
+  color: #ff0000;
+}
+
+/* --- Modal hiển thị đè lên toàn màn hình, độc lập với .users-page --- */
+
+.add-user-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  width: 50%;
+  height: auto;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.add-user-modal input,
+.add-user-modal select {
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-user-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.add-user-modal-buttons button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-user-modal-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.role-select,
+.role-select-inline {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .users-page table,
+  .users-page thead,
+  .users-page tbody,
+  .users-page th,
+  .users-page td,
+  .users-page tr {
+    display: block;
+  }
+
+  .users-page th {
+    display: none;
+  }
+
+  .users-page td {
+    padding: 12px;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .users-page td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+  }
+}

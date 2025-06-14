@@ -1,0 +1,79 @@
+.grade-table-container {
+  padding: 20px;
+  max-width: 100%;
+  overflow-x: auto;
+  font-family: Arial, sans-serif;
+}
+
+.grade-table-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
+
+.grade-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.grade-table th,
+.grade-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+}
+
+.grade-table th {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+}
+
+.grade-table td {
+  background-color: #fff;
+}
+
+.grade-input-container {
+  display: flex;
+  justify-content: center;
+  padding: 2px;
+}
+
+.grade-input-container input {
+  width: 60px;
+  text-align: center;
+  padding: 4px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.grade-input-container input:focus {
+  outline: none;
+  border-color: #1abc9c;
+  box-shadow: 0 0 2px rgba(0, 123, 255, 0.8);
+}
+
+.button {
+  padding: 6px 10px;
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+
+.center {
+  text-align: center;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}

@@ -1,27 +1,27 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./component/Login";
-import MainScreen from "./component/MainScreen";
-import Profile from "./component/Profile";
-import Reports from "./component/Reports";
-import Calendar from "./component/Calendar";
-import Notifications from "./component/Notifications";
-import Settings from "./component/Settings";
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/main" element={<MainScreen />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
-    </Router>
-  );
-}
+import Login from './login/Login';
+import AdminRoutes from './router/AdminRouter';
+import TeacherRoutes from './router/TeacherRouter';
+import StudentRoutes from './router/StudentRouter';
+import Unauthorized from './router/Unauthorized';
+
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} /> 
+      <Route path="/admin/*" element={<AdminRoutes />} />
+      <Route path="/teacher/*" element={<TeacherRoutes />} />
+      <Route path="/student/*" element={<StudentRoutes />} />
+      <Route path="/unauthorized" element={<Unauthorized />} />
+      
+      {/* Route không tìm thấy, chuyển về login hoặc 404 */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
+  </Router>
+);
 
 export default App;

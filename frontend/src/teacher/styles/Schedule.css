@@ -1,0 +1,142 @@
+.schedule-page {
+    padding: 24px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .schedule-header h2 {
+    color: #2c3e50;
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+  
+  .toggle-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .toggle-btn {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+  
+  .toggle-btn:hover {
+    background-color: #5f86ad;
+    transform: translateY(-1px);
+  }
+  
+  .toggle-btn.active {
+    background-color: #fffdfd;
+    color: #2c3e50;
+    border-color: #2c3e50;
+    transform: translateY(-1px);
+  }
+  
+  .schedule-generate-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+  }
+  
+  .schedule-generate-btn:hover {
+    background-color: #27ae60;
+    transform: translateY(-1px);
+  }
+  
+  .section {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+  }
+  
+  .section h3 {
+    color: #2c3e50;
+    margin: 0 0 16px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .schedule-table th,
+  .schedule-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .schedule-table th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  .schedule-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  .schedule-table tr:hover {
+    background-color: #e9ecef;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .schedule-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    
+    .toggle-buttons {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .toggle-btn {
+      width: 48%;
+      margin: 0;
+    }
+    
+    .section {
+      margin-bottom: 16px;
+    }
+  }
+  

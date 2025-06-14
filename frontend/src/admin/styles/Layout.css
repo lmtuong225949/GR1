@@ -1,0 +1,37 @@
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar-menu {
+  width: 220px;
+  background-color: #2c3e50;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu.closed {
+  width: 60px;
+}
+
+.content-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+header {
+  background-color: #34495e;
+  color: white;
+}

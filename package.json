@@ -11,7 +11,8 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.14.1"
+    "pg": "^8.14.1",
+    "recharts": "^2.15.3"
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

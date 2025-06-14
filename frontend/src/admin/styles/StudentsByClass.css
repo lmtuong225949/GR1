@@ -1,0 +1,96 @@
+/* StudentsByClass.css */
+
+.students-by-class-page {
+  padding: 20px;
+  background-color: #f4f6f8;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #2c3e50;
+}
+
+.students-by-class-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.students-by-class-header h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 24px;
+  color: #34495e;
+}
+
+.back-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgb(52 152 219 / 0.4);
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #2980b9;
+}
+
+.students-by-class-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.students-by-class-table th,
+.students-by-class-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  vertical-align: middle;
+  color: #2c3e50;
+}
+
+.students-by-class-table th {
+  background-color: #2c3e50;
+  color: white;
+  font-weight: 600;
+}
+
+.students-by-class-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.no-students {
+  margin-top: 20px;
+  font-style: italic;
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .students-by-class-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .back-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .students-by-class-table th,
+  .students-by-class-table td {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+}

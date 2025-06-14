@@ -1,32 +1,38 @@
+// src/middleware/auth.js
 const jwt = require('jsonwebtoken');
-const SECRET = 'mysecret'; // tốt nhất lấy từ process.env
 
-// Xác thực token
-const authenticateToken = (req, res, next) => {
+// Khóa bí mật JWT (phải trùng với khóa dùng ở AuthController)
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+
+function authenticateToken(req, res, next) {
+  // Lấy header: Authorization: Bearer <token>
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Thiếu token đăng nhập' });
+  }
 
-  if (!token) return res.sendStatus(401);
+  const parts = authHeader.split(' ');
+  if (parts.length !== 2 || parts[0] !== 'Bearer') {
+    return res.status(401).json({ message: 'Token không hợp lệ' });
+  }
 
-  jwt.verify(token, SECRET, (err, user) => {
-    if (err) return res.sendStatus(403); // Token không hợp lệ
+  const token = parts[1];
 
-    req.user = user; // { id, role }
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    // decoded chứa payload, ví dụ: { id, username, role, magv, giaovienid, iat, exp }
+    req.user = {
+      id: decoded.id,
+      username: decoded.username,
+      role: decoded.role,
+      // Gán magv hoặc giaovienid nếu có (để controller truy cập)
+      magv: decoded.magv || decoded.giaovienid || null,
+    };
     next();
-  });
-};
+  } catch (err) {
+    console.error('authenticateToken error:', err);
+    return res.status(403).json({ message: 'Token không hợp lệ hoặc đã hết hạn' });
+  }
+}
 
-// Kiểm tra role cụ thể
-const authorizeRoles = (...allowedRoles) => {
-  return (req, res, next) => {
-    if (!allowedRoles.includes(req.user.role)) {
-      return res.status(403).json({ message: 'Không có quyền truy cập' });
-    }
-    next();
-  };
-};
-
-module.exports = {
-  authenticateToken,
-  authorizeRoles
-};
+module.exports = authenticateToken;

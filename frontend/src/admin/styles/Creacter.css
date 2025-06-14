@@ -1,0 +1,102 @@
+.teacher-learning {
+  background-color: #f9fafb;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.teacher-learning-header {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.teacher-learning-header h2 {
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.toggle-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.toggle-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.toggle-btn:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.toggle-btn.active {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.toggle-btn.active:hover {
+  background-color: #2563eb;
+}
+
+.upload-form {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.upload-form label {
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.upload-form input[type="text"],
+.upload-form input[type="file"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+.upload-form input[type="text"]:focus,
+.upload-form input[type="file"]:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.upload-form button[type="submit"] {
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.upload-form button[type="submit"]:hover {
+  background-color: #2563eb;
+}
+
+.upload-form button[type="submit"]:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}

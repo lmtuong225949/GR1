@@ -1,0 +1,75 @@
+/* Container and header */
+.schedule-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-container h2 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* Table styles */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, 1fr);
+  gap: 1px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lesson-block {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+}
+
+.teacher {
+  font-size: 0.9em;
+  color: #6c757d;
+  margin-top: 4px;
+}
+
+.schedule-grid th,
+.schedule-grid td {
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.schedule-grid th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Hover effects */
+.schedule-table tr:hover td {
+  background-color: #f8f9fa;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .schedule-container {
+    padding: 1rem;
+  }
+  
+  .schedule-table th,
+  .schedule-table td {
+    padding: 0.75rem;
+  }
+}
+  
