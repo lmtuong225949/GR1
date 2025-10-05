@@ -30,6 +30,7 @@ app.use('/api/roles', require('./routes/RoleRoues'));
 app.use('/api/myclass', require('./routes/MyclassRoutes'));
 app.use('/api/assignments', require('./routes/AssignmentRoutes'));
 app.use('/api/schedules', require('./routes/ScheduleRoutes'));
+app.use('/api/parents', require('./routes/ParentRouter'));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/learning", require("./uploads/UploadRoutes"));

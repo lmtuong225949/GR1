@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import "../styles/Schedule.css";
 import TimetableView from "./TimetableForGV";
 import AssignmentView from "./AssignmentForGV";
-import "../styles/Schedule.css";
 
 const Schedule = () => {
   const [activeView, setActiveView] = useState("schedule");

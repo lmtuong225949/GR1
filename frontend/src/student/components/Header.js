@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { Bell, LogOut } from "lucide-react";
-import "../styles/Header.css";
+import "../../components/ui/styles/Header.css";
 
 const Header = ({ username = "Admin" }) => {
   const navigate = useNavigate();
@@ -36,8 +36,9 @@ const Header = ({ username = "Admin" }) => {
   return (
     <header className="header">
       <div className="header-top">
-        <div className="logo">
-          TRƯỜNG THPT CHUYÊN TTHG
+        <div className="logo"><img src="/TTHG school.png" alt="TTHG school" /></div>
+        <div className="name">
+          <h1>TRƯỜNG THPT TRẦN ĐẠI NGHĨA</h1>
         </div>
       </div>
 

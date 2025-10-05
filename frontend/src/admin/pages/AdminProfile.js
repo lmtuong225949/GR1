@@ -7,6 +7,15 @@ const AdminProfile = () => {
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({ email: "", sdt: "" });
   const [saving, setSaving] = useState(false);
+  
+  // Helper to render initials in avatar
+  const getInitials = (name) => {
+    if (!name) return "?";
+    const parts = name.trim().split(/\s+/);
+    const first = parts[0]?.[0] || "";
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+    return (first + last).toUpperCase() || "?";
+  };
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
@@ -67,45 +76,87 @@ const AdminProfile = () => {
 
   return (
     <div className="admin-profile-container">
-      <h2>Thông Tin Quản Trị Viên</h2>
-      <div className="profile-box">
-        <div><strong>Họ tên:</strong> {user.hoten || "Không có"}</div>
-        <div><strong>Tài khoản:</strong> {user.username}</div>
-        <div><strong>Vai trò:</strong> {user.role}</div>
+      <h2>Hồ Sơ Quản Trị</h2>
 
-        <div>
-          <strong>Email:</strong>{" "}
-          {editing ? (
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          ) : (
-            user.email || "Không có"
-          )}
+      {/* Header section with avatar and primary info */}
+      <div className="profile-header">
+        <div className="avatar" aria-label="avatar">
+          {getInitials(user.hoten || user.username)}
         </div>
-
-        <div>
-          <strong>SDT:</strong>{" "}
-          {editing ? (
-            <input
-              type="text"
-              name="sdt"
-              value={formData.sdt}
-              onChange={handleChange}
-            />
-          ) : (
-            user.sdt || "Không có"
-          )}
+        <div className="header-info">
+          <div className="name-row">
+            <span className="name">{user.hoten || "Không có"}</span>
+            <span className={`role-badge ${user.role?.toLowerCase() || ""}`}>{user.role}</span>
+          </div>
+          <div className="sub-row">
+            <span className="username">@{user.username}</span>
+            <span className={`status-badge ${user.locked ? "locked" : "active"}`}>
+              {user.locked ? "Đang khóa" : "Đang hoạt động"}
+            </span>
+          </div>
         </div>
+      </div>
 
-        <div><strong>Trạng thái:</strong> {user.locked ? "Khóa" : "Mở khóa"}</div>
+      {/* Details grid */}
+      <div className="profile-grid">
+        <div className="field">
+          <label>Họ tên</label>
+          <div className="value">{user.hoten || "Không có"}</div>
+        </div>
+        <div className="field">
+          <label>Tài khoản</label>
+          <div className="value">{user.username}</div>
+        </div>
+        <div className="field">
+          <label>Email</label>
+          <div className="value">
+            {editing ? (
+              <input
+                type="email"
+                name="email"
+                placeholder="email@domain.com"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            ) : (
+              user.email || "Không có"
+            )}
+          </div>
+        </div>
+        <div className="field">
+          <label>SDT</label>
+          <div className="value">
+            {editing ? (
+              <input
+                type="text"
+                name="sdt"
+                placeholder="090xxxxxxx"
+                value={formData.sdt}
+                onChange={handleChange}
+              />
+            ) : (
+              user.sdt || "Không có"
+            )}
+          </div>
+        </div>
+      </div>
 
-        <button onClick={() => (editing ? handleSave() : setEditing(true))} disabled={saving}>
-          {editing ? (saving ? "Đang lưu..." : "Lưu") : "Chỉnh sửa"}
-        </button>
+      {/* Actions */}
+      <div className="profile-actions">
+        {editing ? (
+          <>
+            <button className="btn primary" onClick={handleSave} disabled={saving}>
+              {saving ? "Đang lưu..." : "Lưu thay đổi"}
+            </button>
+            <button className="btn" onClick={() => { setEditing(false); setFormData({ email: user.email || "", sdt: user.sdt || "" }); }} disabled={saving}>
+              Hủy
+            </button>
+          </>
+        ) : (
+          <button className="btn primary" onClick={() => setEditing(true)}>
+            Chỉnh sửa
+          </button>
+        )}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import SidebarMenu from "./SidebarMenu";
 import Header from "./Header";
-import "../styles/Layout.css";
+import "../../components/ui/styles/Layout.css";
 
 const MainLayout = () => {
   const [username, setUsername] = useState("");

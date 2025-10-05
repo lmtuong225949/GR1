@@ -53,6 +53,12 @@ const Login = () => {
         case "student":
           navigate("/student", { replace: true });
           break;
+        case "librarian":
+          navigate("/librarian", { replace: true });
+          break;
+        case "parent":
+          navigate("/parent", { replace: true });
+          break;
         default:
           setError("Vai trò không hợp lệ");
           break;
@@ -91,6 +97,12 @@ const Login = () => {
           <button type="submit" disabled={loading}>
             {loading ? "Đang đăng nhập..." : "Đăng Nhập"}
           </button>
+          <div className="forgot-password">
+            <a href="/forgot-password" onClick={(e) => {
+              e.preventDefault();
+              navigate('/forgot-password');
+            }}>Quên mật khẩu?</a>
+          </div>
         </form>
       </div>
     </div>

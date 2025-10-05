@@ -1,13 +1,15 @@
-.sidebar {
+.admin-sidebar {
   width: 200px;
   transition: width 0.3s ease;
   background-color: #2c3e50;
   color: white;
-  height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+ 
 }
 
-.sidebar.collapsed {
+.admin-sidebar.collapsed {
   width: 60px;
 }
 
@@ -17,14 +19,23 @@
   cursor: pointer;
 }
 
-.menu {
+.admin-menu {
   list-style: none;
   padding: 0;
   margin: 0;
-  overflow-y: hidden;
+  flex: 1;
+  overflow-y: auto;
 }
 
-.menu-item {
+.admin-menu::-webkit-scrollbar {
+  width: 6px; /* tuỳ chọn: thêm scrollbar nhỏ gọn */
+}
+
+.admin-menu::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+.admin-menu-item {
   display: flex;
   align-items: center;
   padding: 1rem;
@@ -32,11 +43,11 @@
   transition: background-color 0.2s ease;
 }
 
-.menu-item:hover {
+.admin-menu-item:hover {
   background-color: #34495e;
 }
 
-.menu-item.active {
+.admin-menu-item.active {
   background-color: #1abc9c;
 }
 

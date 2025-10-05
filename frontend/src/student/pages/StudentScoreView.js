@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 Thêm
+import React, { useState, useEffect } from "react";
 import "../styles/StudentScoreView.css";
+import { useNavigate } from "react-router-dom";
 
 const StudentScoreView = () => {
   const [scores, setScores] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const mahs = localStorage.getItem("mahs");
-  const navigate = useNavigate(); // 👈 Hook điều hướng
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAvgScores = async () => {

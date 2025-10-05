@@ -5,7 +5,6 @@ import { Button } from "../../components/ui/button";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "../styles/Creacter.css";
-
 const UploadForm = ({ title, type }) => {
   const { register, handleSubmit, reset } = useForm();
   const [message, setMessage] = useState("");

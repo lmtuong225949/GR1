@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "../../components/ui/button";
+import React, { useState, useEffect } from "react";
 import "../styles/DocumentList.css";
+import { Button } from "../../components/ui/button";
 
 const DocumentList = () => {
   const [docs, setDocs] = useState([]);

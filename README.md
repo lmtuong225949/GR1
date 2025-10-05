@@ -4,7 +4,11 @@
 Hệ thống quản lý học sinh là một ứng dụng web giúp quản lý thông tin học sinh, giáo viên và quản trị viên. Hệ thống được phát triển với React.js cho frontend và Node.js với Express.js cho backend.
 
 ## Cấu trúc dự án
+<<<<<<< HEAD
 
+=======
+```
+>>>>>>> c3d5f92 (thêm phụ huynh)
 LM_tuong_GR1/
 ├── frontend/          # Frontend React application
 │   ├── public/       # Static files (index.html, favicon, etc.)
@@ -41,7 +45,11 @@ LM_tuong_GR1/
 │   │       └── error.js # Error handling middleware
 │   └── package.json
 └── package.json
+<<<<<<< HEAD
 
+=======
+```
+>>>>>>> c3d5f92 (thêm phụ huynh)
 
 ## Yêu cầu hệ thống
 - Node.js >= 14.x
@@ -52,24 +60,40 @@ LM_tuong_GR1/
 ## Cài đặt và chạy
 
 ### 1. Cài đặt các thư viện
+<<<<<<< HEAD
 bash
+=======
+```bash
+>>>>>>> c3d5f92 (thêm phụ huynh)
 # Cài đặt thư viện cho backend
 npm install
 
 # Chuyển đến thư mục frontend và cài đặt thư viện
 npm install
+<<<<<<< HEAD
 
+=======
+```
+>>>>>>> c3d5f92 (thêm phụ huynh)
 
 ### 2. Cấu hình cơ sở dữ liệu
 - Tạo cơ sở dữ liệu PostgreSQL
 - Cập nhật thông tin kết nối cơ sở dữ liệu trong file `backend/config/db.js`
 
 ### 3. Chạy ứng dụng
+<<<<<<< HEAD
+=======
+```bash
+>>>>>>> c3d5f92 (thêm phụ huynh)
 # Chạy backend
 npm run dev
 
 # Trong một terminal mới, chạy frontend
 npm start
+<<<<<<< HEAD
+=======
+```
+>>>>>>> c3d5f92 (thêm phụ huynh)
 
 ## Tính năng chính
 - Quản lý tài khoản người dùng (học sinh, giáo viên, quản trị viên)
@@ -96,4 +120,8 @@ npm start
 tk: admin mk: 123456
 tk: teacher mk: 123456
 tk: hocsinh01 mk: 123456
+<<<<<<< HEAD
 tk: hocsinh02 mk: 123456
+=======
+tk: hocsinh02 mk: 123456
+>>>>>>> c3d5f92 (thêm phụ huynh)

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import "../styles/Creacter.css";
 import { Card, CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import "../styles/Creacter.css";
 
 const UploadForm = ({ title, type }) => {
   const { register, handleSubmit, reset } = useForm();

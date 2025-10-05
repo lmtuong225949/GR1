@@ -1,8 +1,6 @@
-/* Schedule.css */
 .schedule-container {
   min-height: 100vh;
   background-color: #f3f4f6;
-  display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;

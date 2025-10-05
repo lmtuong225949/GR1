@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/AssignmentView.css";
 import { useNavigate } from "react-router-dom";
 
 const AssignmentViewForTeacher = () => {
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const token = localStorage.getItem("token");
+  const [error, setError] = useState("");
   
   const navigate = useNavigate();
 

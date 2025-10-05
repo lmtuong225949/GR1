@@ -1,0 +1,260 @@
+/* Programs Page Styles */
+.programs-container {
+  color: #111827;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans,
+    Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Hero Section */
+.programs-hero {
+  background: linear-gradient(135deg, #d0d9f6, #fff);
+  padding: 80px 20px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.programs-hero h1 {
+  font-size: 2.5rem;
+  color: #0f766e;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #4b5563;
+  max-width: 1100px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Academic Programs */
+.academic-programs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.section-intro {
+  font-size: 1.1rem;
+  color: #4b5563;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.program-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #0f766e;
+}
+
+.program-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.program-card h3 {
+  color: #0f766e;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.program-card p {
+  color: #4b5563;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.program-link {
+  color: #0f766e;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto;
+  transition: all 0.2s ease;
+}
+
+.program-link:hover {
+  color: #0d5f59;
+  text-decoration: none;
+}
+
+.program-link span {
+  margin-left: 6px;
+  transition: transform 0.2s ease;
+}
+
+.program-link:hover span {
+  transform: translateX(4px);
+}
+
+/* Extracurricular Activities */
+.extracurricular {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.extracurricular h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.activity-card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.activity-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  border-color: #0f766e;
+}
+
+.activity-card h3 {
+  color: #0f766e;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.activity-card p {
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Special Programs */
+.special-programs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.special-programs h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #111827;
+}
+
+.special-programs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.special-program {
+  background: #f0fdf4;
+  padding: 30px;
+  border-radius: 12px;
+  border-left: 4px solid #0f766e;
+}
+
+.special-program h3 {
+  color: #0f766e;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.special-program p {
+  color: #4b5563;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* CTA Section */
+.programs-cta {
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  padding: 60px 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 80px 0 40px;
+  border: 1px solid #d1fae5;
+}
+
+.programs-cta h2 {
+  color: #0f766e;
+  font-size: 1.75rem;
+  margin-bottom: 16px;
+}
+
+.programs-cta p {
+  color: #4b5563;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 24px;
+  line-height: 1.7;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .programs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .activities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .special-programs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .programs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .activities-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .programs-hero h1 {
+    font-size: 3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+}

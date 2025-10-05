@@ -7,7 +7,7 @@ import {
   FaCog,
   FaBook,
 } from "react-icons/fa";
-import "../styles/SidebarMenu.css";
+import "../../components/ui/styles/SidebarMenu.css";
 
 const SidebarMenu = () => {
   const [isOpen, setIsOpen] = useState(true);

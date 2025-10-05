@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Schedule.css";
 import { Modal, Button } from 'react-bootstrap';
+import "../styles/Schedule.css";
 
 const GenerateSchedule = () => {
   const [loading, setLoading] = useState(false);

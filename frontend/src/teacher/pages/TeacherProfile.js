@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/TeacherProfile.css";
 
 const TeacherProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({ email: "", sdt: "" });
   const [saving, setSaving] = useState(false);
+  const [formData, setFormData] = useState({ email: "", sdt: "" });
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
@@ -67,7 +67,7 @@ const TeacherProfile = () => {
 
   return (
     <div className="admin-profile-container">
-      <h2>Thông Tin Quản Trị Viên</h2>
+      <h2>Thông Tin Giáo Viên</h2>
       <div className="profile-box">
         <div><strong>Họ tên:</strong> {user.hoten || "Không có"}</div>
         <div><strong>Tài khoản:</strong> {user.username}</div>

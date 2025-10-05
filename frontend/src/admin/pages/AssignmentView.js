@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "../styles/AssignmentView.css";
-
 const AssignmentView = () => {
   const [assignments, setAssignments] = useState([]);
   const [search, setSearch] = useState("");

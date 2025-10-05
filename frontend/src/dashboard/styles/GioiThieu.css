@@ -1,0 +1,268 @@
+/* About Page Styles */
+.about-container {
+  color: #111827;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans,
+    Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Hero Section */
+.about-hero {
+  background: linear-gradient(135deg, #d0d9f6, #fff);
+  padding: 80px 20px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.about-hero h1 {
+  font-size: 2.5rem;
+  color: #0f766e;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #4b5563;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* About Section */
+.about-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.about-content h2 {
+  font-size: 2rem;
+  color: #111827;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #4b5563;
+  margin-bottom: 16px;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.about-image img:hover {
+  transform: translateY(-5px);
+}
+
+/* Mission & Vision */
+.mission-vision {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+.mission, .vision {
+  background: #f8fafc;
+  padding: 30px;
+  border-radius: 12px;
+  border-left: 4px solid #0f766e;
+}
+
+.mission h3, .vision h3 {
+  color: #0f766e;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.mission p, .vision p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+/* Core Values */
+.core-values {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.core-values h2 {
+  font-size: 2rem;
+  color: #111827;
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.value-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #0f766e;
+}
+
+.value-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.value-card h4 {
+  color: #111827;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.value-card p {
+  color: #6b7280;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Technology Section */
+.technology-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.tech-intro {
+  font-size: 1.25rem;
+  color: #4b5563;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.tech-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #0f766e;
+}
+
+.tech-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.tech-card h3 {
+  color: #111827;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.tech-card p {
+  color: #6b7280;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Contact CTA */
+.contact-cta {
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  padding: 60px 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 80px 0 40px;
+  border: 1px solid #d1fae5;
+}
+
+.contact-cta h2 {
+  color: #0f766e;
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.contact-cta p {
+  color: #4b5563;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 24px;
+  line-height: 1.7;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .about-section {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .mission-vision {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .values-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .about-hero h1 {
+    font-size: 3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+}

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "../styles/GradeTable.css";
+import { useSearchParams } from "react-router-dom";
 
 const GradeTable = () => {
   const [gradesByStudent, setGradesByStudent] = useState([]);

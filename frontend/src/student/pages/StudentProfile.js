@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/StudentProfile.css";
 
 const StudentProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({ email: "", sdt: "" });
   const [saving, setSaving] = useState(false);
+  const [formData, setFormData] = useState({ email: "", sdt: "" });
 
   useEffect(() => {
     const stored = localStorage.getItem("user");

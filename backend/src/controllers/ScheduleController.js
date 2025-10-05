@@ -47,7 +47,7 @@ const getScheduleByGV = async (req, res) => {
     }
 
     const result = await db.query(`
-      SELECT 
+      SELECT
         tkb.id,
         tkb.thu,
         tkb.tiet,
@@ -57,12 +57,12 @@ const getScheduleByGV = async (req, res) => {
       FROM thoikhoabieu tkb
       JOIN lop l ON tkb.lopid = l.malop
       JOIN monhoc m ON tkb.monid = m.id
-      JOIN phanconggiangday pcgd 
-        ON pcgd.lopid = tkb.lopid AND pcgd.monid = tkb.monid
-      WHERE pcgd.giaovienid = $1
-        AND tkb.lanthu = (
-          SELECT MAX(lanthu) FROM thoikhoabieu WHERE lopid = tkb.lopid
-        )
+      LEFT JOIN phanconggiangday pcgd
+        ON pcgd.lopid = tkb.lopid AND pcgd.monid = tkb.monid AND pcgd.giaovienid = $1
+      WHERE tkb.lanthu = (
+        SELECT MAX(lanthu) FROM thoikhoabieu WHERE lopid = tkb.lopid
+      )
+      AND pcgd.giaovienid IS NOT NULL
       ORDER BY tkb.thu, tkb.tiet
     `, [magv]);
 

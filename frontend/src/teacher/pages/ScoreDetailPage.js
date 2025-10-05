@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 
 const ScoreDetail = () => {

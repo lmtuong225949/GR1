@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/StudentSchedule.css";
+import "../styles/Dashboard.css";
 
 const weekdayMap = {
   2: "Thứ 2",
@@ -7,6 +7,7 @@ const weekdayMap = {
   4: "Thứ 4",
   5: "Thứ 5",
   6: "Thứ 6",
+  7: "Thứ 7"
 };
 
 const StudentSchedule = () => {

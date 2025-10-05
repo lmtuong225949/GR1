@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "../styles/Classer.css";
+import { useNavigate } from "react-router-dom";
 
 const formatDate = (dateString) => {
   if (!dateString) return "";

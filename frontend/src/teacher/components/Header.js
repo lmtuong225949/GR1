@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import "../../components/ui/styles/Header.css";
 import { Bell, LogOut } from "lucide-react";
-import "../styles/Header.css";
 
 const Header = ({ username = "Admin" }) => {
   const navigate = useNavigate();

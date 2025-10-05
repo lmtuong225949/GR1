@@ -1,0 +1,258 @@
+/* Base Styles */
+.quyche-container {
+  color: #2d3748;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  
+}
+
+/* Hero Section */
+.quyche-hero {
+  background: linear-gradient(135deg, #d0d9f6, #fff);
+  padding: 80px 20px;
+  border-radius: 12px;
+  text-align: center;
+  color: #0f766e;
+  position: relative;
+  overflow: hidden;
+}
+
+.quyche-hero h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 0 0 16px;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  opacity: 0.95;
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+.quyche-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 2.25rem 2.5rem;
+  margin: 0 0 2rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.quyche-section:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.quyche-section h2 {
+  color: #111827;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.75rem;
+  position: relative;
+}
+
+
+.quyche-section h3 {
+  color: #2d3748;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.75rem 0 1rem;
+}
+
+.quyche-section p {
+  margin: 0 0 1.5rem;
+  color: #4a5568;
+  line-height: 1.7;
+}
+
+.quyche-section ul {
+  margin: 0 0 1.5rem;
+  padding: 0 0 0 1.5rem;
+}
+
+.quyche-section li {
+  margin-bottom: 0.75rem;
+  padding-left: 0.5rem;
+  color: #4a5568;
+  position: relative;
+  line-height: 1.7;
+}
+
+
+/* Exam Subjects & Schedule */
+.exam-subjects,
+.exam-schedule {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.subject-group,
+.schedule-item {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #0f766e;
+  transition: all 0.2s ease;
+}
+
+.schedule-item {
+  background: #f0f9ff;
+  border-left-color: #0ea5e9;
+}
+
+.subject-group h3,
+.schedule-item h3 {
+  color: #0f766e;
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  border: none;
+}
+
+.schedule-item h3 {
+  color: #0ea5e9;
+}
+
+.subject-group ul,
+.schedule-item ul {
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+}
+
+.subject-group li,
+.schedule-item li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  color: #4a5568;
+}
+
+/* Formula */
+.formula {
+  background: #f8fafc;
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  border-left: 4px solid #10b981;
+  font-family: 'Roboto Mono', monospace;
+  color: #0f766e;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+/* Note Box */
+.quyche-note {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  color: #92400e;
+  font-style: italic;
+}
+
+.quyche-note strong {
+  color: #b45309;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .quyche-container {
+    padding: 0 1.5rem;
+  }
+  
+  .quyche-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .quyche-section {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .quyche-hero {
+    padding: 4rem 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+  
+  .quyche-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .quyche-section {
+    padding: 1.75rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .quyche-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .exam-subjects,
+  .exam-schedule {
+    grid-template-columns: 1fr;
+  }
+  
+  .formula {
+    font-size: 1rem;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quyche-container {
+    padding: 0 1rem;
+  }
+  
+  .quyche-hero {
+    padding: 3rem 1.25rem;
+    margin: 1rem 0 2rem;
+    border-radius: 8px;
+  }
+  
+  .quyche-hero h1 {
+    font-size: 1.75rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .quyche-section {
+    padding: 1.5rem 1.25rem;
+    border-radius: 8px;
+  }
+  
+  .quyche-section h2 {
+    font-size: 1.375rem;
+  }
+  
+  .quyche-section ul,
+  .subject-group ul,
+  .schedule-item ul {
+    padding-left: 1.25rem;
+  }
+  
+  .formula {
+    font-size: 0.95rem;
+    padding: 1rem;
+  }
+}

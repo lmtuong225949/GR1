@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Users.css";
 import { FaEdit, FaTrash, FaLock, FaUnlock } from "react-icons/fa";
+import "../styles/Users.css";
 
-// Modal xác nhận xoá
 const ConfirmModal = ({ message, onConfirm, onCancel }) => (
-  <div className="modal-backdrop">
-    <div className="modal">
+  <div className="users-modal-backdrop">
+    <div className="users-modal">
       <p>{message}</p>
-      <div className="modal-buttons">
-        <button onClick={onConfirm}>Đồng ý</button>
-        <button onClick={onCancel}>Hủy</button>
+      <div className="users-modal-buttons">
+        <button className="user-modal-buttons-yes" onClick={onConfirm}>Đồng ý</button>
+        <button className="user-modal-buttons-no" onClick={onCancel}>Hủy</button>
       </div>
     </div>
   </div>
 );
 
-// Modal chỉnh vai trò
 const RoleModal = ({ currentRole, onSave, onCancel }) => {
   const [role, setRole] = useState(currentRole);
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
+    <div className="users-modal-backdrop">
+      <div className="users-modal">
         <p>Chọn vai trò mới:</p>
         <select
           value={role}
@@ -30,17 +28,18 @@ const RoleModal = ({ currentRole, onSave, onCancel }) => {
           <option value="admin">Quản trị viên</option>
           <option value="teacher">Giáo viên</option>
           <option value="student">Học sinh</option>
+          <option value="librarian">Thủ thư</option>
+          <option value="parent">Phụ huynh</option>
         </select>
-        <div className="modal-buttons">
-          <button onClick={() => onSave(role)}>Lưu</button>
-          <button onClick={onCancel}>Hủy</button>
+        <div className="users-modal-buttons">
+          <button className="user-modal-buttons-yes" onClick={() => onSave(role)}>Lưu</button>
+          <button className="user-modal-buttons-no" onClick={onCancel}>Hủy</button>
         </div>
       </div>
     </div>
   );
 };
 
-// Modal thêm tài khoản (đã cập nhật logic cho từng vai trò)
 const AddUserModal = ({ onSave, onCancel }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -48,54 +47,48 @@ const AddUserModal = ({ onSave, onCancel }) => {
   const [mahs, setMahs] = useState("");
   const [giaovienid, setGiaovienid] = useState("");
   const [bgh, setBgh] = useState("");
+  const [maphuhuynh, setMaphuhuynh] = useState("");
 
-  const handleSubmit = () => {
-    // Validate all required fields
-    const usernameTrim = username?.trim();
-    const passwordTrim = password?.trim();
-    const roleTrim = role?.trim();
-    const roleLower = roleTrim?.toLowerCase();
-
-    if (!usernameTrim) {
-      return alert("Vui lòng nhập tên đăng nhập.");
-    }
-    if (!passwordTrim) {
-      return alert("Vui lòng nhập mật khẩu.");
-    }
-    if (!roleTrim) {
-      return alert("Vui lòng chọn vai trò.");
-    }
-    if (!['admin', 'teacher', 'student'].includes(roleLower)) {
+  const handleSubmit = async () => {
+    if (!username) return alert("Vui lòng nhập tên đăng nhập.");
+    if (!password) return alert("Vui lòng nhập mật khẩu.");
+    if (!role) return alert("Vui lòng chọn vai trò.");
+  
+    const roleLower = role.toLowerCase();
+  
+    if (!['admin', 'teacher', 'student', 'librarian', 'parent'].includes(roleLower)) {
       return alert("Vai trò không hợp lệ.");
     }
-
-    // Validate role-specific fields
-    if (roleLower === "student" && !mahs?.trim()) {
-      return alert("Vui lòng nhập mã học sinh (mahs).\n\nLưu ý: Các trường bao gồm:\n- Tên đăng nhập\n- Mật khẩu\n- Mã học sinh");
-    } else if (roleLower === "teacher" && !giaovienid?.trim()) {
-      return alert("Vui lòng nhập mã giáo viên (giaovienid).\n\nLưu ý: Các trường bao gồm:\n- Tên đăng nhập\n- Mật khẩu\n- Mã giáo viên");
-    } else if (roleLower === "admin" && !bgh?.trim()) {
-      return alert("Vui lòng nhập ID ban giám hiệu (bgh).\n\nLưu ý: Các trường bao gồm:\n- Tên đăng nhập\n- Mật khẩu\n- ID ban giám hiệu");
+  
+    if (roleLower === "student" && !mahs) {
+      return alert("Vui lòng nhập mã học sinh (mahs).");
+    } else if (roleLower === "teacher" && !giaovienid) {
+      return alert("Vui lòng nhập mã giáo viên (giaovienid).");
+    } else if (roleLower === "admin" && !bgh) {
+      return alert("Vui lòng nhập ID ban giám hiệu (bgh).");
+    } else if (roleLower === "librarian" && !bgh) {
+      return alert("Vui lòng nhập ID thủ thư.");
+    } else if (roleLower === "parent" && !maphuhuynh) {
+      return alert("Vui lòng nhập mã phụ huynh (maphuhuynh).");
     }
+  
+    const originalGiaovienid = roleLower === 'teacher' ? giaovienid.trim() : giaovienid;
 
-    // Create user object with all required fields and role-specific fields
-    const newUser = {
-      username: usernameTrim,
-      password: passwordTrim,
+    const userToSend = {
+      username,
+      password,
       role: roleLower,
       locked: false,
-      ...(roleLower === 'student' && { mahs: mahs.trim().padStart(10, '0') }),
-      ...(roleLower === 'teacher' && { giaovienid: giaovienid.trim().padStart(10, '0') }),
-      ...(roleLower === 'admin' && { bgh: parseInt(bgh.trim()) })
+      ...(roleLower === 'student' && { mahs: mahs.trim() }),
+      ...(roleLower === 'teacher' && { giaovienid: originalGiaovienid }),
+      ...(roleLower === 'admin' && { bgh: parseInt(bgh.trim()) }),
+      ...(roleLower === 'librarian' && { bgh: parseInt(bgh.trim()) }),
+      ...(roleLower === 'parent' && {maphuhuynh: maphuhuynh.trim()})
     };
-
-    // Debug log to check the data being sent
-    console.log('Sending user data:', newUser);
-
-    // Pass the complete user object to onSave
-    onSave(newUser);
+  
+    onSave(userToSend);
   };
-
+  
   return (
     <div className="add-user-modal">
       <div className="add-user-modal-content">
@@ -119,12 +112,15 @@ const AddUserModal = ({ onSave, onCancel }) => {
             setMahs("");
             setGiaovienid("");
             setBgh("");
+            setMaphuhuynh("");
           }}
           className="role-select"
         >
           <option value="admin">Quản trị viên</option>
           <option value="teacher">Giáo viên</option>
           <option value="student">Học sinh</option>
+          <option value="librarian">Thủ thư</option>
+          <option value="parent">Phụ huynh</option>
         </select>
 
         {role === "student" && (
@@ -150,9 +146,32 @@ const AddUserModal = ({ onSave, onCancel }) => {
             value={bgh}
             onChange={(e) => {
               const value = e.target.value;
-              // Remove any non-numeric characters
               const cleanValue = value.replace(/[^0-9]/g, '');
               setBgh(cleanValue);
+            }}
+          />
+        )}
+        {role === "librarian" && (
+          <input
+            type="number"
+            placeholder="ID Thủ thư (bgh)"
+            value={bgh}
+            onChange={(e) => {
+              const value = e.target.value;
+              const cleanValue = value.replace(/[^0-9]/g, '');
+              setBgh(cleanValue);
+            }}
+          />
+        )}
+        {role === "parent" && (
+          <input
+            type="number"
+            placeholder="Mã phụ huynh (maphuhuynh)"
+            value={maphuhuynh}
+            onChange={(e) => {
+              const value = e.target.value;
+              const cleanValue = value.replace(/[^0-9]/g, '');
+              setMaphuhuynh(cleanValue);
             }}
           />
         )}
@@ -168,9 +187,14 @@ const AddUserModal = ({ onSave, onCancel }) => {
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 50;
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [editRole, setEditRole] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [roleFilter, setRoleFilter] = useState('all');
 
   useEffect(() => {
     fetchUsers();
@@ -182,14 +206,35 @@ export default function Users() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Lỗi khi tải dữ liệu");
       setUsers(data);
+      setFilteredUsers(data);
     } catch (err) {
       console.error("Lỗi khi tải danh sách người dùng:", err);
     }
   };
 
+  useEffect(() => {
+    let result = users;
+    
+    // Apply role filter
+    if (roleFilter !== 'all') {
+      result = result.filter(user => user.role === roleFilter);
+    }
+    
+    // Apply search term filter
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(user => 
+        (user.hoten && user.hoten.toLowerCase().includes(term)) ||
+        (user.username && user.username.toLowerCase().includes(term))
+      );
+    }
+    
+    setFilteredUsers(result);
+  }, [users, searchTerm, roleFilter]);
+
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${id}`, {
+      const res = await fetch(`http://localhost:5000/api/users/${id}/delete`, {
         method: 'DELETE'
       });
       if (!res.ok) throw new Error(await res.text());
@@ -241,9 +286,8 @@ export default function Users() {
     try {
       console.log('Attempting to add user:', newUser);
       
-      // Add extra validation before sending to server
       const usernameTrim = newUser.username?.trim();
-      const passwordTrim = newUser.passwordhash?.trim(); // Check passwordhash instead of password
+      const passwordTrim = newUser.password?.trim(); 
       const roleLower = newUser.role?.toLowerCase();
       
       if (!usernameTrim || !passwordTrim || !roleLower) {
@@ -259,18 +303,25 @@ export default function Users() {
       if (roleLower === "admin" && !newUser.bgh) {
         return alert("Thiếu ID ban giám hiệu");
       }
+      if (roleLower === "librarian" && !newUser.bgh) {
+        return alert("Thiếu ID thủ thư");
+      }
+      if (roleLower === "parent" && !newUser.maphuhuynh?.trim()) {
+        return alert("Thiếu mã phụ huynh");
+      }
 
-      // Create a copy of the user object with proper field names
       const userToSend = {
         username: usernameTrim,
-        passwordhash: passwordTrim,
+        password: passwordTrim,
         role: roleLower,
         locked: false,
-        // Add role-specific fields
-        ...(roleLower === 'student' && { mahs: newUser.mahs.trim().padStart(10, '0') }),
-        ...(roleLower === 'teacher' && { giaovienid: newUser.giaovienid.trim().padStart(10, '0') }),
-        ...(roleLower === 'admin' && { bgh: parseInt(newUser.bgh.trim()) })
+        ...(roleLower === 'student' && { mahs: newUser.mahs.trim() }),
+        ...(roleLower === 'teacher' && { giaovienid: newUser.giaovienid.trim() }),
+        ...(roleLower === 'admin' && { bgh: Number(newUser.bgh) }),
+        ...(roleLower === 'librarian' && { bgh: Number(newUser.bgh) }),
+        ...(roleLower === 'parent' && { maphuhuynh: newUser.maphuhuynh.trim() })
       };
+      
 
       console.log('Sending to server:', userToSend);
 
@@ -282,7 +333,6 @@ export default function Users() {
         body: JSON.stringify(userToSend)
       });
 
-      // Handle response
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         const errorMessage = errorData.message || 'Lỗi không xác định';
@@ -300,10 +350,55 @@ export default function Users() {
       alert(err.message || "Không thể thêm tài khoản. Có thể tên đăng nhập đã tồn tại hoặc thông tin không hợp lệ.");
     }
   };
+  // Get current users for the current page
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, roleFilter]);
+
   return (
     <div className="users-page">
-      <h2>Quản lý tài khoản người dùng</h2>
-      <button onClick={() => setShowAddModal(true)}>Thêm tài khoản</button>
+      <div className="users-header">
+        <h2>Quản lý tài khoản người dùng</h2>
+        <div className="users-controls">
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Tìm kiếm theo tên hoặc tên đăng nhập..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="filter-box">
+            <select
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className="role-filter"
+            >
+              <option value="all">Tất cả vai trò</option>
+              <option value="admin">Quản trị viên</option>
+              <option value="teacher">Giáo viên</option>
+              <option value="student">Học sinh</option>
+              <option value="parent">Phụ huynh</option>
+              <option value="librarian">Thủ thư</option>
+            </select>
+          </div>
+          <button onClick={() => setShowAddModal(true)} className="add-user-btn">
+            Thêm tài khoản
+          </button>
+        </div>
+      </div>
+      <div className="users-count">
+        Tổng số: {filteredUsers.length} tài khoản | Trang {currentPage} / {totalPages}
+      </div>
       <table>
         <thead>
           <tr>
@@ -316,7 +411,7 @@ export default function Users() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
+          {currentUsers.map((user, index) => (
             <tr key={user.id}>
               <td>{index + 1}</td>
               <td>{user.username}</td>
@@ -352,6 +447,64 @@ export default function Users() {
           ))}
         </tbody>
       </table>
+      
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button 
+            onClick={() => paginate(1)} 
+            disabled={currentPage === 1}
+            className="page-btn"
+          >
+            Đầu
+          </button>
+          <button 
+            onClick={() => paginate(currentPage - 1)} 
+            disabled={currentPage === 1}
+            className="page-btn"
+          >
+            Trước
+          </button>
+          
+          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+            // Show 2 pages before and after current page
+            let pageNumber;
+            if (currentPage <= 3) {
+              pageNumber = i + 1;
+            } else if (currentPage >= totalPages - 2) {
+              pageNumber = totalPages - 4 + i;
+            } else {
+              pageNumber = currentPage - 2 + i;
+            }
+            
+            if (pageNumber < 1 || pageNumber > totalPages) return null;
+            
+            return (
+              <button
+                key={pageNumber}
+                onClick={() => paginate(pageNumber)}
+                className={`page-btn ${currentPage === pageNumber ? 'active' : ''}`}
+              >
+                {pageNumber}
+              </button>
+            );
+          })}
+          
+          <button 
+            onClick={() => paginate(currentPage + 1)} 
+            disabled={currentPage === totalPages}
+            className="page-btn"
+          >
+            Tiếp
+          </button>
+          <button 
+            onClick={() => paginate(totalPages)} 
+            disabled={currentPage === totalPages}
+            className="page-btn"
+          >
+            Cuối
+          </button>
+        </div>
+      )}
 
       {confirmDelete !== null && (
         <ConfirmModal

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import "../../components/ui/styles/SidebarMenu.css";
 import {
   FaHome,
   FaCog,
@@ -13,7 +14,6 @@ import {
   FaUserShield,
   FaBook
 } from "react-icons/fa";
-import "../styles/SidebarMenu.css";
 
 const SidebarMenu = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -44,13 +44,14 @@ const SidebarMenu = () => {
         ☰
       </div>
       <ul className="menu">
-        {menuItems.map((item) => (
+        {menuItems.map((item, index) => (
           <li
             key={item.path}
             className={`menu-item ${
               location.pathname === item.path ? "active" : ""
             }`}
             onClick={() => navigate(item.path)}
+            style={{ '--index': index }}
           >
             <span className="icon">{item.icon}</span>
             {isOpen && <span className="label">{item.label}</span>}

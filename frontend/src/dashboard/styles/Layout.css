@@ -1,0 +1,21 @@
+/* Ensure the app stacks header at the top and content below */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* The header itself is sticky in Header.css */
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Optional: reset spacing inside content on small screens */
+@media (max-width: 768px) {
+  .content {
+    padding: 12px;
+  }
+}

@@ -7,47 +7,59 @@ const weekdayMap = {
   4: "Thứ 4",
   5: "Thứ 5",
   6: "Thứ 6",
+  7: "Thứ 7",
 };
+
 
 const TimetableView = () => {
   const [scheduleData, setScheduleData] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
   const [classList, setClassList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Lấy dữ liệu TKB từ API
-    fetch('http://localhost:5000/api/schedules/all')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+    const fetchScheduleData = async () => {
+      setIsLoading(true);
+      setError(null);
+      
+      try {
+        const response = await fetch('http://localhost:5000/api/schedules/all');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.success) {
-          setScheduleData(data.data);
-
-          // Lấy danh sách lớp duy nhất
-          const uniqueClasses = [...new Set(data.data.map(item => item.tenlop))].sort((a, b) => {
-            // Nếu là dạng "10A1", "10A2", "11B1" → nên dùng so sánh theo mã lớp logic hơn:
-            return a.localeCompare(b, 'vi', { numeric: true });
-          });
-          setClassList(uniqueClasses);
-          if (uniqueClasses.length > 0) {
-            setSelectedClass(uniqueClasses[0]); // mặc định chọn lớp đầu tiên
-          }
-        } else {
-          console.error("Lỗi khi lấy TKB:", data.message);
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+          throw new Error(data.message || 'Không thể tải dữ liệu thời khóa biểu');
         }
-      })
-      .catch((err) => {
-        console.error("Lỗi khi lấy TKB:", err);
-        // Set empty state
+        
+        setScheduleData(data.data || []);
+        
+        // Lấy danh sách lớp duy nhất và sắp xếp
+        const uniqueClasses = [...new Set(data.data.map(item => item.tenlop))]
+          .filter(Boolean)
+          .sort((a, b) => a.localeCompare(b, 'vi', { numeric: true }));
+          
+        setClassList(uniqueClasses);
+        
+        if (uniqueClasses.length > 0 && !selectedClass) {
+          setSelectedClass(uniqueClasses[0]);
+        }
+      } catch (err) {
+        console.error("Lỗi khi tải dữ liệu:", err);
+        setError(err.message || 'Đã xảy ra lỗi khi tải dữ liệu');
         setScheduleData([]);
         setClassList([]);
-        setSelectedClass('');
-      });
-  }, []);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchScheduleData();
+  }, [selectedClass]);
 
   const periods = [1, 2, 3, 4, 5];
 
@@ -56,19 +68,51 @@ const TimetableView = () => {
     (item) => item.tenlop === selectedClass
   );
 
+  if (isLoading) {
+    return (
+      <div className="schedule-container loading">
+        <div className="spinner"></div>
+        <p>Đang tải dữ liệu thời khóa biểu...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="schedule-container error">
+        <p className="error-message">{error}</p>
+        <button 
+          className="retry-button"
+          onClick={() => window.location.reload()}
+        >
+          Thử lại
+        </button>
+      </div>
+    );
+  }
+
+  if (classList.length === 0) {
+    return (
+      <div className="schedule-container empty">
+        <p>Không có dữ liệu thời khóa biểu nào được tìm thấy.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="schedule-container">
       <h2>Thời khóa biểu - {selectedClass}</h2>
 
-      {/* Bộ lọc lớp */}
       <div className="class-filter">
-        <label>Chọn lớp: </label>
+        <label htmlFor="class-select">Chọn lớp: </label>
         <select
+          id="class-select"
           value={selectedClass}
           onChange={(e) => setSelectedClass(e.target.value)}
+          disabled={isLoading}
         >
           {classList.map((lop, idx) => (
-            <option key={idx} value={lop}>
+            <option key={`${lop}-${idx}`} value={lop}>
               {lop}
             </option>
           ))}
@@ -78,11 +122,13 @@ const TimetableView = () => {
       <div className="schedule-grid">
         <div className="grid-header empty-cell"></div>
         {Object.values(weekdayMap).map((day) => (
-          <div key={day} className="grid-header">{day}</div>
+          <div key={day} className="grid-header">
+            {day}
+          </div>
         ))}
 
         {periods.map((period) => (
-          <React.Fragment key={period}>
+          <React.Fragment key={`period-${period}`}>
             <div className="grid-header tiet">Tiết {period}</div>
             {Object.keys(weekdayMap).map((thu) => {
               const lessons = filteredData.filter(
@@ -93,8 +139,11 @@ const TimetableView = () => {
                 <div key={`${thu}-${period}`} className="grid-cell">
                   {lessons.length > 0 ? (
                     lessons.map((lesson, idx) => (
-                      <div key={idx} className="lesson-block">
+                      <div key={`${thu}-${period}-${idx}`} className="lesson-block">
                         <div className="monhoc">{lesson.monhoc}</div>
+                        {lesson.giaovien && (
+                          <div className="giaovien">{lesson.giaovien}</div>
+                        )}
                       </div>
                     ))
                   ) : (

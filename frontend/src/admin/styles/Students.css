@@ -1,6 +1,3 @@
-/* Students.css */
-
-/* Overlay and Form Popup */
 .overlay {
   position: fixed;
   top: 0;
@@ -91,17 +88,12 @@
 /* Students Page Styles */
 
 .students-page {
-  padding: 20px;
-  background-color: #f4f6f8;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  color: #2c3e50;
   padding: 24px;
   max-width: 1200px;
-  margin: 0 auto;
   background-color: #f4f6f8;
   min-height: 100vh;
   font-family: 'Segoe UI', Arial, sans-serif;
+  color: #2c3e50;
 }
 
 .students-page-header {

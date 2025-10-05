@@ -3,7 +3,6 @@ import "../styles/Notifications.css";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
-  const [replies] = useState([]);
   const [roles, setRoles] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -13,7 +12,7 @@ const Notifications = () => {
   });
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(null);
-  const [expandedId, setExpandedId] = useState(null); // 👉 trạng thái xem chi tiết
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -176,18 +175,8 @@ const Notifications = () => {
         </ul>
       ) : (
         <div>Đang tải thông báo...</div>
-      )}
-
-      <h3>Phản hồi</h3>
-      <ul className="replies-list">
-        {replies.length === 0 && <li>Chưa có phản hồi nào.</li>}
-        {replies.map((reply) => (
-          <li key={reply.id}>
-            <strong>{reply.from}:</strong> {reply.message}{" "}
-            <small>({reply.date})</small>
-          </li>
-        ))}
-      </ul>
+      )
+      }
     </div>
   );
 };

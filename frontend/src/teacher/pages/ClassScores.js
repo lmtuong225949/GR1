@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import "../styles/ClassScores.css";
 import { useNavigate, useParams } from "react-router-dom";
-
+import "../styles/ClassScores.css";
 // Popup component chỉnh sửa nhận xét
 function EditScorePopup({ score, onClose, onSave }) {
   const [nhanxet, setNhanxet] = useState(score.nhanxet ?? "");

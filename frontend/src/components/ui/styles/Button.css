@@ -1,32 +1,73 @@
-.button {
+/* Button Styles */
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  background-color: #1abc9c;
-  color: #ffffff;
-  transition: background-color 0.2s ease;
   padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  border: 1px solid transparent;
 }
 
-.button:hover {
-  background-color: #16a34a;
+/* Button Variants */
+.btn-primary {
+  background-color: #0d6efd;
+  color: white;
 }
 
-.button:active {
-  background-color: #16a34a;
+.btn-primary:hover {
+  background-color: #0b5ed7;
 }
 
-.button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
 }
 
-.button:disabled {
-  background-color: #e5e7eb;
-  color: #9ca3af;
+.btn-secondary:hover {
+  background-color: #5c636a;
+}
+
+.btn-success {
+  background-color: #198754;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+/* Button Block */
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+/* Button with Icon */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Disabled State */
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.65;
   cursor: not-allowed;
 }

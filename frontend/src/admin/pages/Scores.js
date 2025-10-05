@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Scores.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/Scores.css";
 
 const Scores = () => {
   const navigate = useNavigate();

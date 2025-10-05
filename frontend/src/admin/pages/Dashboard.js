@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Dashboard.css";
 import { FaUsers, FaChalkboardTeacher, FaSchool, FaChartPie } from "react-icons/fa";
+import "../../components/ui/styles/Card.css";
+import "../../components/ui/styles/Button.css";
+import "../styles/Dashboard.css";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -70,15 +72,9 @@ const Dashboard = () => {
       <div className="dashboard">
         <h2>Trang chính - Tổng quan</h2>
         <div className="cards">
-          <div className="card loading">
-            <div className="skeleton" />
-          </div>
-          <div className="card loading">
-            <div className="skeleton" />
-          </div>
-          <div className="card loading">
-            <div className="skeleton" />
-          </div>
+          {[1, 2, 3, 4].map((item) => (
+            <div key={item} className="card loading" />
+          ))}
         </div>
       </div>
     );
@@ -86,7 +82,7 @@ const Dashboard = () => {
 
   if (error) {
     return (
-      <div className="dashboard">
+      <div className="admin-dashboard">
         <h2>Trang chính - Tổng quan</h2>
         <div className="error-message">{error}</div>
       </div>
@@ -97,45 +93,36 @@ const Dashboard = () => {
     <div className="dashboard">
       <h2>Trang chính - Tổng quan</h2>
       <div className="cards">
-        <button 
-          className="card" 
-          onClick={() => window.location.href = "/admin/students"}
-        >
+        <div className="card" onClick={() => window.location.href = "/admin/students"}>
           <FaUsers className="icon" />
-          <div>
+          <div className="card-content">
             <h3>Học sinh</h3>
             <p>{stats.students.toLocaleString()}</p>
           </div>
-        </button>
-        <button 
-          className="card" 
-          onClick={() => window.location.href = "/admin/teachers"}
-        >
+        </div>
+
+        <div className="card" onClick={() => window.location.href = "/admin/teachers"}>
           <FaChalkboardTeacher className="icon" />
-          <div>
+          <div className="card-content">
             <h3>Giáo viên</h3>
             <p>{stats.teachers.toLocaleString()}</p>
           </div>
-        </button>
-        <button 
-          className="card" 
-          onClick={() => window.location.href = "/admin/classes"}
-        >
+        </div>
+
+        <div className="card" onClick={() => window.location.href = "/admin/classes"}>
           <FaSchool className="icon" />
-          <div>
+          <div className="card-content">
             <h3>Lớp học</h3>
             <p>{stats.classes.toLocaleString()}</p>
           </div>
-        </button>
-        <button 
-          className="card" 
-          onClick={() => window.location.href = "/admin/reports"}
-        >
+        </div>
+
+        <div className="card" onClick={() => window.location.href = "/admin/reports"}>
           <FaChartPie className="icon" />
-          <div>
+          <div className="card-content">
             <h3>Thống kê</h3>
           </div>
-        </button>
+        </div>
       </div>
     </div>
   );

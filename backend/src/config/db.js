@@ -8,6 +8,10 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
+  client_encoding: 'UTF8',
+  application_name: 'library-app',
+  client_min_messages: 'warning',
+  connectionString: `postgresql://${process.env.DB_USER}:${encodeURIComponent(process.env.DB_PASSWORD)}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?client_encoding=UTF8&encoding=UTF8`
 });
 
 // Kiểm tra kết nối

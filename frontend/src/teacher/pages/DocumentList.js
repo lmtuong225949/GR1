@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import "../styles/DocumentList.css";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import "../styles/DocumentList.css";
 import { useNavigate } from "react-router-dom";
 
 const DocumentList = () => {
