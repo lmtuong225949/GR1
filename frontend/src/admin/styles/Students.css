@@ -89,7 +89,6 @@
 
 .students-page {
   padding: 24px;
-  max-width: 1200px;
   background-color: #f4f6f8;
   min-height: 100vh;
   font-family: 'Segoe UI', Arial, sans-serif;
@@ -165,6 +164,28 @@
   background-color: #16a085;
   transform: translateY(-1px);
   box-shadow: 0 6px 12px rgba(26, 188, 156, 0.25);
+}
+
+.students-import-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2);
+  transition: all 0.3s ease;
+}
+
+.students-import-btn:hover {
+  background-color: #229954;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(39, 174, 96, 0.25);
 }
 
 .students-table {
@@ -290,6 +311,11 @@
     justify-content: center;
   }
 
+  .students-import-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .students-search-box {
     min-width: auto;
     width: 100%;
@@ -359,4 +385,155 @@
 .form-buttons button:last-child {
   background-color: #e74c3c;
   color: white;
+}
+
+/* Import Form Styles */
+.import-student-form-popup {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.import-student-form-popup h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.import-instructions {
+  background-color: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #27ae60;
+}
+
+.import-instructions p {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.import-instructions ul {
+  margin: 0 0 16px 0;
+  padding-left: 20px;
+  color: #555;
+  font-size: 14px;
+}
+
+.import-instructions li {
+  margin-bottom: 6px;
+}
+
+.download-template-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.download-template-btn:hover {
+  background-color: #229954;
+  transform: translateY(-1px);
+}
+
+.file-upload-area {
+  margin-bottom: 20px;
+}
+
+.file-upload-label {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  color: #666;
+  font-weight: 500;
+}
+
+.file-upload-label:hover {
+  border-color: #27ae60;
+  background-color: #e8f8f5;
+  color: #27ae60;
+}
+
+.import-preview {
+  margin-bottom: 20px;
+}
+
+.import-preview p {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.preview-table-container {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.import-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.import-preview-table th,
+.import-preview-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.import-preview-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.import-preview-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.import-confirm-btn {
+  background-color: #27ae60 !important;
+  color: white !important;
+}
+
+.import-confirm-btn:hover:not(:disabled) {
+  background-color: #229954 !important;
+}
+
+.import-confirm-btn:disabled {
+  background-color: #95a5a6 !important;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background-color: #e74c3c !important;
+  color: white !important;
+}
+
+.cancel-btn:hover {
+  background-color: #c0392b !important;
 }

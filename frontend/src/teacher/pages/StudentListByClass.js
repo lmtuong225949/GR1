@@ -14,7 +14,7 @@ const GradeTable = () => {
   const namhoc = searchParams.get("namhoc");
 
   useEffect(() => {
-    if (!lopid || !monid || !hocky || !namhoc) return;
+    if (!lopid || !monid || !namhoc) return;
 
     const fetchClassName = async () => {
       try {
@@ -33,7 +33,7 @@ const GradeTable = () => {
     const fetchGrades = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/assignments/getStudentGrades?lopid=${lopid}&monid=${monid}&hocky=${hocky}&namhoc=${namhoc}`
+          `http://localhost:5000/api/assignments/getStudentGrades?lopid=${lopid}&monid=${monid}&namhoc_id=${namhoc}`
         );
         const data = await res.json();
 

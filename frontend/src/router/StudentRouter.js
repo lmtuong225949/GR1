@@ -10,7 +10,8 @@ import Dashboard from "../student/pages/Dashboard";
 import DocumentList from "../student/pages/DocumentList";
 import StudentScoreView from "../student/pages/StudentScoreView";
 import ScoreDetail from "../student/pages/ScoreDetail"; 
-
+import Exam from "../student/pages/Exam";
+import Takeexam from "../student/pages/TakeExam";
 const StudentRoutes = () => {
   const userStr = localStorage.getItem("user");
   let user = null;
@@ -24,7 +25,7 @@ const StudentRoutes = () => {
 
   return (
     <Routes>
-      {/* Layout chính cho admin */}
+      {/* Layout chính cho student */}
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="settings" element={<Settings />} />
@@ -34,9 +35,13 @@ const StudentRoutes = () => {
         <Route path="document" element={<DocumentList/>} />
         <Route path="scores" element={<StudentScoreView />} />
         <Route path="scores/:hocky/:namhoc" element={<ScoreDetail />} />
+        <Route path="exam" element={<Exam />} />
         {/* Nếu không tìm thấy route con, chuyển về dashboard */}
         <Route path="*" element={<Navigate to="/student" replace />} />
       </Route>
+      
+      {/* Route không có layout cho trang làm bài thi */}
+      <Route path="exam/:examId" element={<Takeexam />} />
     </Routes>
   );
 };

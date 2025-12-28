@@ -53,16 +53,21 @@ const getScheduleByGV = async (req, res) => {
         tkb.tiet,
         tkb.lopid,
         l.tenlop,
-        m.tenmon AS monhoc
+        m.tenmon AS monhoc,
+        tkb.namhoc_id,
+        COALESCE(nh.kyhoc, 'Chưa phân công') AS kyhoc
       FROM thoikhoabieu tkb
       JOIN lop l ON tkb.lopid = l.malop
       JOIN monhoc m ON tkb.monid = m.id
-      LEFT JOIN phanconggiangday pcgd
+      LEFT JOIN namhoc nh ON tkb.namhoc_id = nh.id
+      INNER JOIN phanconggiangday pcgd
         ON pcgd.lopid = tkb.lopid AND pcgd.monid = tkb.monid AND pcgd.giaovienid = $1
       WHERE tkb.lanthu = (
-        SELECT MAX(lanthu) FROM thoikhoabieu WHERE lopid = tkb.lopid
+        SELECT MAX(t.lanthu) 
+        FROM thoikhoabieu t
+        INNER JOIN phanconggiangday pc 
+          ON pc.lopid = t.lopid AND pc.monid = t.monid AND pc.giaovienid = $1
       )
-      AND pcgd.giaovienid IS NOT NULL
       ORDER BY tkb.thu, tkb.tiet
     `, [magv]);
 
@@ -147,7 +152,16 @@ const getScheduleByHS = async (req, res) => {
 
 const generateScheduleHandler = async (req, res) => {
   try {
-    const result = await generateSchedule();
+    const { namhoc_id } = req.body;
+    
+    if (!namhoc_id) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Vui lòng cung cấp namhoc_id' 
+      });
+    }
+
+    const result = await generateSchedule(namhoc_id);
     res.status(200).json({ success: true, message: "Đã sinh thời khoá biểu!", data: result });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

@@ -28,13 +28,11 @@ const UserController = {
           hs.hoten AS hoten_hs, hs.email AS email_hs, hs.sdt AS sdt_hs,
           gv.hoten AS hoten_gv, gv.email AS email_gv, gv.sdt AS sdt_gv,
           bgh.ten AS hoten_bgh, bgh.email AS email_bgh, bgh.sdt AS sdt_bgh,
-          bgh_tt.ten AS hoten_tt, bgh_tt.email AS email_tt, bgh_tt.sdt AS sdt_tt,
           ph.hoten AS hoten_ph, ph.email AS email_ph, ph.sdt AS sdt_ph
         FROM taikhoan tk
         LEFT JOIN hocsinh hs ON tk.role = 'student' AND tk.mahs = hs.mahs
         LEFT JOIN giaovien gv ON tk.role = 'teacher' AND tk.giaovienid = gv.magv
         LEFT JOIN bgh ON tk.role = 'admin' AND tk.bgh = bgh.id
-        LEFT JOIN bgh bgh_tt ON tk.role = 'librarian' AND tk.bgh = bgh_tt.id
         LEFT JOIN phuhuynh ph ON tk.role = 'parent' AND ph.id::text = tk.maphuhuynh
       `;
 
@@ -59,9 +57,9 @@ const UserController = {
         id: user.id,
         username: safeString(user.username),
         role: safeString(user.role),
-        hoten: safeString(user.hoten_hs || user.hoten_gv || user.hoten_bgh || user.hoten_tt || user.hoten_ph),
-        email: safeString(user.email_hs || user.email_gv || user.email_bgh || user.email_tt || user.email_ph),
-        sdt: safeString(user.sdt_hs || user.sdt_gv || user.sdt_bgh || user.sdt_tt || user.sdt_ph),
+        hoten: safeString(user.hoten_hs || user.hoten_gv || user.hoten_bgh || user.hoten_ph),
+        email: safeString(user.email_hs || user.email_gv || user.email_bgh || user.email_ph),
+        sdt: safeString(user.sdt_hs || user.sdt_gv || user.sdt_bgh || user.sdt_ph),
         locked: user.locked
       }));
 

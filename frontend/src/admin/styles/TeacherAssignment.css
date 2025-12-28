@@ -1,0 +1,550 @@
+/* Teacher Assignment Styles */
+.ta-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.ta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ta-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.ta-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Buttons */
+.ta-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.ta-btn-primary {
+  background: #1abc9c;
+  color: white;
+}
+
+.ta-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.ta-btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.ta-btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.ta-btn-danger {
+  background: #dc3545;
+  color: white;
+}
+
+.ta-btn-danger:hover {
+  background: #c82333;
+}
+
+.ta-btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.ta-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Notifications */
+.ta-notification {
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  animation: ta-slideInDown 0.3s ease;
+  position: relative;
+}
+
+.ta-notification.success {
+  background: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.ta-notification.error {
+  background: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.ta-notification.warning {
+  background: #fff3cd;
+  color: #856404;
+  border-left: 4px solid #ffc107;
+}
+
+@keyframes ta-slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Error Message */
+.ta-error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid #dc3545;
+}
+
+/* Filter Section */
+.ta-filter-section {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ta-filter-section::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.ta-form-group {
+  margin-bottom: 20px;
+}
+
+.ta-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.ta-form-control,
+.ta-form-control select {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: white;
+  box-sizing: border-box;
+}
+
+.ta-form-control:focus,
+.ta-form-control select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ta-form-control:disabled {
+  background: #f8f9fa;
+  cursor: not-allowed;
+}
+
+/* Form Layout */
+.ta-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.ta-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Add Assignment Form */
+.ta-add-form {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #667eea;
+}
+
+.ta-add-form h3 {
+  margin: 0 0 25px 0;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Assignments Table */
+.ta-table-section {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ta-table-section h3 {
+  margin: 0;
+  padding: 20px 25px;
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid #dee2e6;
+  background: #f8f9fa;
+}
+
+/* Table Styles */
+.ta-table-responsive {
+  overflow-x: auto;
+}
+
+.ta-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.ta-table thead th {
+  background: #495057;
+  color: white;
+  padding: 15px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #343a40;
+}
+
+.ta-table tbody td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.ta-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.ta-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Teacher Select in Table */
+.ta-teacher-select {
+  min-width: 150px;
+  padding: 8px 12px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 13px;
+  background: white;
+  cursor: pointer;
+}
+
+.ta-teacher-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+/* Actions Column */
+.ta-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ta-btn-icon {
+  background: transparent;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.ta-btn-icon:hover {
+  background: #dc3545;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* No Data State */
+.ta-no-data {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6c757d;
+}
+
+.ta-no-data p {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+}
+
+.ta-no-data .ta-btn {
+  margin-top: 10px;
+}
+
+/* Loading State */
+.ta-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #6c757d;
+}
+
+.ta-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: ta-spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes ta-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ta-container {
+    padding: 15px;
+  }
+  
+  .ta-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .ta-header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .ta-form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .ta-filter-section {
+    padding: 20px;
+  }
+  
+  .ta-add-form {
+    padding: 20px;
+  }
+  
+  .ta-form-actions {
+    flex-direction: column;
+  }
+  
+  .ta-table {
+    font-size: 12px;
+  }
+  
+  .ta-table thead th,
+  .ta-table tbody td {
+    padding: 10px 8px;
+  }
+  
+  .ta-teacher-select {
+    min-width: 120px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ta-header h2 {
+    font-size: 24px;
+  }
+  
+  .ta-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .ta-filter-section {
+    padding: 15px;
+  }
+  
+  .ta-add-form {
+    padding: 15px;
+  }
+  
+  .ta-add-form h3 {
+    font-size: 18px;
+  }
+  
+  .ta-table-section h3 {
+    padding: 15px 20px;
+    font-size: 16px;
+  }
+}
+
+/* Custom Scrollbar */
+.ta-table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.ta-table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.ta-table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.ta-table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Focus and Accessibility */
+.ta-btn:focus,
+.ta-form-control:focus,
+select:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.ta-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Print Styles */
+@media print {
+  .ta-header-actions,
+  .ta-form-actions,
+  .ta-actions,
+  .ta-add-form {
+    display: none !important;
+  }
+  
+  .ta-container {
+    background: white;
+    padding: 0;
+  }
+  
+  .ta-header,
+  .ta-filter-section,
+  .ta-table-section {
+    box-shadow: none;
+    border: 1px solid #000;
+    margin-bottom: 20px;
+  }
+}
+
+/* Modal Styles */
+.ta-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ta-modal {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.ta-modal h3 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.ta-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ta-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+  .ta-modal {
+    width: 95vw;
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .ta-modal h3 {
+    font-size: 18px;
+  }
+}

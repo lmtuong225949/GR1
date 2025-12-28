@@ -1,11 +1,32 @@
-import React from "react";
+import React from 'react';
 
-const Input = ({ className = "", type = "text", ...props }) => (
-  <input
-    type={type}
-    className={`flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ${className}`}
-    {...props}
-  />
-);
+const Input = ({ 
+  type = 'text',
+  value,
+  onChange,
+  placeholder,
+  className = '',
+  disabled = false,
+  ...props
+}) => {
+  const classes = [
+    'input',
+    disabled ? 'input--disabled' : '',
+    className
+  ].filter(Boolean).join(' ');
 
+  return (
+    <input
+      type={type}
+      className={classes}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      disabled={disabled}
+      {...props}
+    />
+  );
+};
+
+export default Input;
 export { Input };

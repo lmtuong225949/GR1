@@ -18,4 +18,7 @@ router.put('/update/:mahs', studentsController.updateStudent);
 // DELETE /api/students/delete/:mahs
 router.delete('/delete/:mahs', studentsController.deleteStudent);
 
+// POST /api/students/import
+router.post('/import', studentsController.importStudents);
+
 module.exports = router;

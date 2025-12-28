@@ -53,9 +53,6 @@ const Login = () => {
         case "student":
           navigate("/student", { replace: true });
           break;
-        case "librarian":
-          navigate("/librarian", { replace: true });
-          break;
         case "parent":
           navigate("/parent", { replace: true });
           break;

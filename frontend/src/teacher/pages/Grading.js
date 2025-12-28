@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/AssignmentView.css";
+import "../styles/Grading.css";
 import { useNavigate } from "react-router-dom";
 
 const AssignmentViewForTeacher = () => {
@@ -31,7 +31,9 @@ const AssignmentViewForTeacher = () => {
         console.log('API Response:', result);
 
         if (res.ok) {
+          console.log('Raw API Response:', result);
           setAssignments(result.data);
+          console.log('Assignments set:', result.data);
         } else if (res.status === 401) {
           // Token expired or invalid
           localStorage.removeItem('token');
@@ -49,47 +51,67 @@ const AssignmentViewForTeacher = () => {
     };
 
     fetchTeacherAssignments();
-
-    fetchTeacherAssignments();
   }, [token, navigate]);
 
   return (
-    <div className="section">
-      <h3>Các lớp đang dạy</h3>
+    <div className="teacher-grading-container">
+      <h3 className="teacher-grading-title">Các lớp đang giảng dạy</h3>
 
-      {loading && <p>Đang tải dữ liệu...</p>}
-      {error && <p style={{ color: "red" }}>Lỗi: {error}</p>}
+      {loading && <p className="teacher-grading-loading">Đang tải dữ liệu...</p>}
+      {error && <p className="teacher-grading-error">Lỗi: {error}</p>}
 
-      <table className="schedule-table">
-        <thead>
+      <table className="teacher-grading-table">
+        <thead className="teacher-grading-table-head">
           <tr>
-            <th>Lớp</th>
-            <th>Môn học</th>
-            <th>Năm học</th>
-            <th>Học kỳ</th>
-            <th>Nhập điểm</th>
+            <th className="teacher-grading-table-header">Lớp</th>
+            <th className="teacher-grading-table-header">Môn học</th>
+            <th className="teacher-grading-table-header">Năm học</th>
+            <th className="teacher-grading-table-header">Học kỳ</th>
+            <th className="teacher-grading-table-header">Nhập điểm</th>
           </tr>
         </thead>    
-        <tbody>
+        <tbody className="teacher-grading-table-body">
           {assignments.length > 0 ? (
-            assignments.map((item) => (
-              <tr key={item.id}>
-                <td>{item.tenlop}</td>
-                <td>{item.tenmon}</td>
-                <td>{item.namhoc}</td>
-                <td>{item.hocky}</td>
-                <td>
-                <button className="btn btn-primary"
-                  onClick={() => navigate(`/teacher/grading/${item.tenlop}?lopid=${item.lopid}&monid=${item.monid}&hocky=${item.hocky}&namhoc=${item.namhoc}` )}
+            assignments.map((item) => {
+              console.log('Assignment item:', item);
+              return (
+              <tr key={item.id} className="teacher-grading-table-row">
+                <td className="teacher-grading-table-cell">{item.tenlop}</td>
+                <td className="teacher-grading-table-cell">{item.tenmon}</td>
+                <td className="teacher-grading-table-cell">{item.namhoc}</td>
+                <td className="teacher-grading-table-cell">{item.hocky}</td>
+                <td className="teacher-grading-table-cell">
+                <button className="teacher-grading-action-btn"
+                  onClick={() => {
+                    console.log('Navigating to score detail with params:', {
+                      lopid: item.lopid,
+                      monid: item.monid,
+                      namhoc_id: item.namhoc_id,
+                      hocky: item.hocky,
+                      tenlop: item.tenlop,
+                      tenmon: item.tenmon
+                    });
+                    navigate(`/teacher/score-detail?lopid=${item.lopid}&monid=${item.monid}&namhoc_id=${item.namhoc_id}&hocky=${item.hocky}&tenlop=${item.tenlop}&tenmon=${item.tenmon}`, {
+                      state: {
+                        lopid: item.lopid,
+                        monid: item.monid,
+                        namhoc_id: item.namhoc_id,
+                        hocky: item.hocky,
+                        tenlop: item.tenlop,
+                        tenmon: item.tenmon
+                      }
+                    });
+                  }}
                 >
                   Nhập điểm
                 </button>
                 </td>
               </tr>
-            ))
+              );
+            })
           ) : (
-            <tr>
-              <td colSpan="4" style={{ textAlign: "center" }}>
+            <tr className="teacher-grading-empty-row">
+              <td colSpan="5" className="teacher-grading-empty-cell">
                 Không có phân công nào cho bạn.
               </td>
             </tr>

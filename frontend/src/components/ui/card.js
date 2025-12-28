@@ -1,34 +1,36 @@
-import React from "react";
-import "./styles/Card.css";
+import React from 'react';
+import './styles/Card.css';
 
-const Card = ({ children, className = "" }) => (
-  <div className={`card ${className}`}>
-    {children}
-  </div>
-);
+const Card = ({ 
+  children, 
+  className = '',
+  onClick,
+  ...props 
+}) => {
+  const classes = [
+    'card',
+    onClick ? 'card--clickable' : '',
+    className
+  ].filter(Boolean).join(' ');
 
-const CardHeader = ({ children, className = "" }) => (
-  <div className={`card-header ${className}`}>
-    {children}
-  </div>
-);
+  return (
+    <div 
+      className={classes}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
 
-const CardTitle = ({ children, className = "" }) => (
-  <h3 className={`card-title ${className}`}>
-    {children}
-  </h3>
-);
+const CardContent = ({ children, className = '', ...props }) => {
+  return (
+    <div className={`card__content ${className}`} {...props}>
+      {children}
+    </div>
+  );
+};
 
-const CardDescription = ({ children, className = "" }) => (
-  <p className={`card-description ${className}`}>
-    {children}
-  </p>
-);
-
-const CardContent = ({ children, className = "" }) => (
-  <div className={`card-content ${className}`}>
-    {children}
-  </div>
-);
-
-export { Card, CardHeader, CardTitle, CardDescription, CardContent };
+export default Card;
+export { Card, CardContent };

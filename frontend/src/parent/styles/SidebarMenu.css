@@ -1,0 +1,39 @@
+.sidebar-menu {
+  padding: 1rem 0;
+}
+
+.sidebar-menu__item {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: #d1d5db;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-menu__item:hover {
+  background-color: #374151;
+  color: white;
+}
+
+.sidebar-menu__item--active {
+  background-color: #374151;
+  color: white;
+  border-left-color: #3b82f6;
+}
+
+.sidebar-menu__icon {
+  margin-right: 0.75rem;
+  font-size: 1.125rem;
+}
+
+.sidebar-menu__text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.sidebar-menu__divider {
+  height: 1px;
+  background-color: #374151;
+  margin: 1rem 0;
+}

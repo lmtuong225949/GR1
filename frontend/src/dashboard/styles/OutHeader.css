@@ -215,85 +215,36 @@
 }
 
 @media (max-width: 992px) {
-  /* Menu chuyển thành dọc */
-  .ourmenu {
-    flex-direction: column;
-    width: 100%;
-    margin-top: 10px;
-    gap: 0;
-  }
-
-  /* Link và dropdown button full-width */
-  .ourmenu a,
-  .ourdropdown-button {
-    width: 100%;
-    text-align: left;
-    font-size: 1rem;
-    padding: 10px 15px;
-  }
-
-  /* Dropdown items căn chỉnh padding để thụt vào */
-  .ourdropdown-item {
-    padding-left: 30px;
-  }
-
-  /* Dropdown content trên mobile */
-  .ourdropdown-content {
-    width: 100%;
-    position: static;
-    box-shadow: none;
-    margin-top: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-  }
-
-  .ourdropdown-content.open {
-    max-height: 1000px; /* đủ cao để hiển thị tất cả item */
-  }
-}
-
-
-@media (max-width: 768px) {
   .ourheader {
-    flex-direction: column;
-    padding: 15px 15px;
-    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 20px;
     height: auto;
-    align-items: stretch;
+    min-height: 80px;
   }
 
   .ourheader-content {
     width: 100%;
-    justify-content: space-between;
-    padding: 10px 0;
-  }
-
-  .ourlogo img {
-    height: clamp(40px, 12vw, 50px);
-  }
-
-  .ourname h1 {
-    font-size: clamp(1rem, 4vw, 1.3rem);
-    text-align: center;
+    order: 1;
   }
 
   .ourmenu {
-    width: 100%;
-    margin: 10px 0;
+    order: 2;
     flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
     gap: 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
   }
 
   .ourmenu a,
   .ourdropdown-button {
     width: 100%;
     text-align: left;
-    padding: 10px 15px;
-  }
-
-  .ourdropdown-button {
-    justify-content: space-between;
+    font-size: 0.95rem;
+    padding: 12px 15px;
+    border-radius: 4px;
   }
 
   .ourdropdown-content {
@@ -304,24 +255,180 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease;
+    background: white;
+    border-radius: 4px;
   }
 
   .ourdropdown-content.open {
-    max-height: 1000px;
+    max-height: 500px;
   }
 
   .ourdropdown-item {
-    padding: 10px 25px;
+    padding: 10px 30px;
+    font-size: 0.9rem;
   }
 
   .ouruser-auth {
+    order: 3;
     width: 100%;
     margin: 10px 0 0;
   }
 
   .ouruser-auth button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ourheader {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+    height: auto;
+    min-height: auto;
+    align-items: stretch;
+  }
+
+  .ourheader-content {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .ourlogo img {
+    height: clamp(35px, 10vw, 45px);
+  }
+
+  .ourname h1 {
+    font-size: clamp(0.9rem, 5vw, 1.2rem);
+    text-align: center;
+    flex: 1;
+    margin: 0 15px;
+  }
+
+  .ourmenu {
+    width: 100%;
+    margin: 0;
+    flex-direction: column;
+    gap: 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .ourmenu a,
+  .ourdropdown-button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .ourdropdown-button {
+    justify-content: space-between;
+  }
+
+  .ourdropdown-content {
+    width: 100%;
+    position: static;
+    box-shadow: none;
+    margin-top: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: white;
+    border-radius: 4px;
+  }
+
+  .ourdropdown-content.open {
+    max-height: 400px;
+  }
+
+  .ourdropdown-item {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+  }
+
+  .ouruser-auth {
+    width: 100%;
+    margin: 0;
+  }
+
+  .ouruser-auth button {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .ourheader {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .ourheader-content {
+    gap: 15px;
+  }
+
+  .ourlogo img {
+    height: 30px;
+  }
+
+  .ourname h1 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .ourmenu {
+    padding: 6px;
+  }
+
+  .ourmenu a,
+  .ourdropdown-button {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .ourdropdown-item {
+    padding: 6px 15px;
+    font-size: 0.8rem;
+  }
+
+  .ouruser-auth button {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ourheader {
+    padding: 8px;
+  }
+
+  .ourlogo img {
+    height: 25px;
+  }
+
+  .ourname h1 {
+    font-size: 0.9rem;
+  }
+
+  .ourmenu a,
+  .ourdropdown-button {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+
+  .ourdropdown-item {
+    padding: 5px 12px;
+    font-size: 0.75rem;
+  }
+
+  .ouruser-auth button {
+    padding: 6px;
+    font-size: 0.8rem;
   }
 }

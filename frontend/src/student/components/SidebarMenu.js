@@ -22,6 +22,7 @@ const SidebarMenu = () => {
     { path: "/student", icon: <FaHome />, label: "Trang chính" },
     { path: "/student/scores", icon: <FaClipboardList />, label: "Xem điểm" },
     { path: "/student/document", icon: <FaBook />, label: "Tài liệu - Bài giảng" },
+    { path: "/student/exam", icon: <FaBook />, label: "Kiểm tra định kỳ" },
     { path: "/student/notifications", icon: <FaBell />, label: "Thông báo" },
     { path: "/student/settings", icon: <FaCog />, label: "Cài đặt" },
   ];

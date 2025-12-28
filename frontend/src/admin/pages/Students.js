@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { FaSearch, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { FaSearch, FaEdit, FaTrash, FaPlus, FaFileExcel } from "react-icons/fa";
+import * as XLSX from "xlsx";
 import "../styles/Students.css";
 
 function debounce(func, wait) {
@@ -18,6 +19,9 @@ const Students = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [showAddForm, setShowAddForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [showImportForm, setShowImportForm] = useState(false);
+  const [importData, setImportData] = useState([]);
+  const [importFileName, setImportFileName] = useState("");
   const [newStudent, setNewStudent] = useState({
     mahs: "",
     hoten: "",
@@ -178,6 +182,81 @@ const Students = () => {
     }
   };
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImportFileName(file.name);
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      try {
+        const binaryStr = event.target.result;
+        const workbook = XLSX.read(binaryStr, { type: "binary" });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        // Bỏ qua header row và chuyển đổi dữ liệu
+        const studentsData = jsonData.slice(1).map((row) => ({
+          mahs: row[0] || "",
+          hoten: row[1] || "",
+          gioitinh: row[2] || "",
+          ngaysinh: row[3] ? formatDateForInput(row[3]) : "",
+          diachi: row[4] || "",
+          sdt: row[5] || "",
+          email: row[6] || "",
+          lopid: row[7] || "",
+        })).filter(student => student.mahs && student.hoten && student.lopid);
+
+        setImportData(studentsData);
+      } catch (error) {
+        alert("Lỗi khi đọc file Excel: " + error.message);
+        setImportData([]);
+      }
+    };
+
+    reader.readAsBinaryString(file);
+  };
+
+  const handleImportStudents = async () => {
+    if (importData.length === 0) {
+      return alert("Không có dữ liệu để import");
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/students/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ students: importData }),
+      });
+
+      if (!res.ok) throw new Error("Import học sinh thất bại");
+
+      const result = await res.json();
+      alert(`Import thành công! ${result.imported || importData.length} học sinh đã được thêm.`);
+      setShowImportForm(false);
+      setImportData([]);
+      setImportFileName("");
+      fetchStudents(searchTerm, 1);
+    } catch (error) {
+      alert("Lỗi: " + error.message);
+    }
+  };
+
+  const downloadTemplate = () => {
+    const templateData = [
+      ["Mã HS", "Họ và tên", "Giới tính", "Ngày sinh", "Địa chỉ", "SĐT", "Email", "Mã lớp"],
+      ["HS001", "Nguyễn Văn A", "Nam", "2005-01-15", "Hà Nội", "0912345678", "nva@email.com", "L10A1"],
+      ["HS002", "Trần Thị B", "Nữ", "2005-03-20", "Hà Nội", "0912345679", "ttb@email.com", "L10A1"],
+    ];
+
+    const ws = XLSX.utils.aoa_to_sheet(templateData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Template");
+    XLSX.writeFile(wb, "template_hocsinh.xlsx");
+  };
+
   return (
     <div className="students-page">
       <div className="students-page-header">
@@ -194,6 +273,9 @@ const Students = () => {
           </div>
           <button className="students-add-btn" onClick={() => { setShowAddForm(true); resetForm(); }}>
             <FaPlus /> Thêm học sinh
+          </button>
+          <button className="students-import-btn" onClick={() => setShowImportForm(true)}>
+            <FaFileExcel /> Import Excel
           </button>
         </div>
       </div>
@@ -223,6 +305,91 @@ const Students = () => {
             <div className="form-buttons">
               <button onClick={isEditing ? handleUpdateStudent : handleAddStudent}>Lưu</button>
               <button onClick={() => { setShowAddForm(false); resetForm(); }}>Hủy</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showImportForm && (
+        <div className="overlay">
+          <div className="import-student-form-popup">
+            <h3>Import học sinh từ Excel</h3>
+            
+            <div className="import-instructions">
+              <p><strong>Hướng dẫn:</strong></p>
+              <ul>
+                <li>File Excel phải có các cột theo đúng thứ tự: Mã HS, Họ và tên, Giới tính, Ngày sinh, Địa chỉ, SĐT, Email, Mã lớp</li>
+                <li>Ngày sinh định dạng: YYYY-MM-DD (ví dụ: 2005-01-15)</li>
+                <li>Giới tính: Nam hoặc Nữ</li>
+                <li>Tải template để xem định dạng chuẩn</li>
+              </ul>
+              <button className="download-template-btn" onClick={downloadTemplate}>
+                <FaFileExcel /> Tải template
+              </button>
+            </div>
+
+            <div className="file-upload-area">
+              <input
+                type="file"
+                id="excel-file"
+                accept=".xlsx,.xls"
+                onChange={handleFileUpload}
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="excel-file" className="file-upload-label">
+                {importFileName || 'Chọn file Excel...'}
+              </label>
+            </div>
+
+            {importData.length > 0 && (
+              <div className="import-preview">
+                <p><strong>Dữ liệu sẽ được import ({importData.length} học sinh):</strong></p>
+                <div className="preview-table-container">
+                  <table className="import-preview-table">
+                    <thead>
+                      <tr>
+                        <th>Mã HS</th>
+                        <th>Họ tên</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Lớp</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {importData.slice(0, 5).map((student, index) => (
+                        <tr key={index}>
+                          <td>{student.mahs}</td>
+                          <td>{student.hoten}</td>
+                          <td>{student.gioitinh}</td>
+                          <td>{student.ngaysinh}</td>
+                          <td>{student.lopid}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {importData.length > 5 && <p>... và {importData.length - 5} học sinh khác</p>}
+                </div>
+              </div>
+            )}
+
+            <div className="form-buttons">
+              <button 
+                onClick={handleImportStudents} 
+                disabled={importData.length === 0}
+                className="import-confirm-btn"
+              >
+                Import ({importData.length} học sinh)
+              </button>
+              <button 
+                onClick={() => {
+                  setShowImportForm(false);
+                  setImportData([]);
+                  setImportFileName("");
+                }}
+                className="cancel-btn"
+              >
+                Hủy
+              </button>
             </div>
           </div>
         </div>

@@ -1,0 +1,182 @@
+/* Teacher Grading Page Styles */
+.teacher-grading-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.teacher-grading-title {
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.teacher-grading-loading {
+  text-align: center;
+  color: #3498db;
+  font-size: 16px;
+  padding: 20px;
+  background: #e3f2fd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.teacher-grading-error {
+  text-align: center;
+  color: #e74c3c;
+  font-size: 16px;
+  padding: 20px;
+  background: #ffebee;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #e74c3c;
+}
+
+.teacher-grading-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.teacher-grading-table-head {
+  background: #34495e;
+}
+
+.teacher-grading-table-header {
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.teacher-grading-table-body {
+  background: white;
+}
+
+.teacher-grading-table-row {
+  border-bottom: 1px solid #ecf0f1;
+  transition: background-color 0.3s ease;
+}
+
+.teacher-grading-table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.teacher-grading-table-row:last-child {
+  border-bottom: none;
+}
+
+.teacher-grading-table-cell {
+  padding: 15px;
+  color: #2c3e50;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.teacher-grading-action-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.teacher-grading-action-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.teacher-grading-empty-row {
+  background: #f8f9fa;
+}
+
+.teacher-grading-empty-cell {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  padding: 40px 20px;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .teacher-grading-container {
+    padding: 15px;
+    margin: 10px;
+  }
+  
+  .teacher-grading-title {
+    font-size: 20px;
+    text-align: center;
+  }
+  
+  .teacher-grading-table {
+    font-size: 12px;
+  }
+  
+  .teacher-grading-table-header,
+  .teacher-grading-table-cell {
+    padding: 10px 8px;
+  }
+  
+  .teacher-grading-action-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .teacher-grading-container {
+    padding: 10px;
+    margin: 5px;
+  }
+  
+  .teacher-grading-title {
+    font-size: 18px;
+  }
+  
+  .teacher-grading-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .teacher-grading-table-header,
+  .teacher-grading-table-cell {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+  
+  .teacher-grading-action-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Animation for loading state */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.teacher-grading-loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}

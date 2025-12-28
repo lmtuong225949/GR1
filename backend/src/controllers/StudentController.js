@@ -184,3 +184,70 @@ exports.deleteStudent = async (req, res) => {
     res.status(500).json({ message: "Lỗi máy chủ" });
   }
 };
+
+// POST /api/students/import
+exports.importStudents = async (req, res) => {
+  try {
+    const { students } = req.body;
+
+    if (!students || !Array.isArray(students) || students.length === 0) {
+      return res.status(400).json({ message: "Dữ liệu không hợp lệ" });
+    }
+
+    const client = await db.getClient();
+    
+    try {
+      await client.query('BEGIN');
+      
+      let importedCount = 0;
+      const skippedStudents = [];
+      
+      for (const student of students) {
+        const { mahs, hoten, gioitinh, ngaysinh, diachi, sdt, email, lopid } = student;
+        
+        if (!mahs || !hoten || !lopid) {
+          skippedStudents.push({ mahs: mahs || 'unknown', reason: 'Thiếu thông tin bắt buộc' });
+          continue;
+        }
+        
+        // Kiểm tra học sinh đã tồn tại chưa
+        const checkQuery = 'SELECT mahs FROM hocsinh WHERE mahs = $1';
+        const checkResult = await client.query(checkQuery, [mahs]);
+        
+        if (checkResult.rows.length > 0) {
+          skippedStudents.push({ mahs, reason: 'Mã học sinh đã tồn tại' });
+          continue;
+        }
+        
+        // Thêm học sinh mới
+        const insertQuery = `
+          INSERT INTO hocsinh (mahs, hoten, gioitinh, ngaysinh, diachi, sdt, email, lopid)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        `;
+        
+        await client.query(insertQuery, [mahs, hoten, gioitinh, ngaysinh, diachi, sdt, email, lopid]);
+        importedCount++;
+      }
+      
+      await client.query('COMMIT');
+      
+      res.status(201).json({ 
+        message: "Import học sinh hoàn tất",
+        imported: importedCount,
+        skipped: skippedStudents.length,
+        skippedStudents: skippedStudents.slice(0, 10), // Chỉ trả về 10 bản ghi bị bỏ qua đầu tiên
+        total: students.length
+      });
+      
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+    
+  } catch (err) {
+    console.error("Lỗi import học sinh:", err);
+    res.status(500).json({ message: "Lỗi máy chủ" });
+  }
+};

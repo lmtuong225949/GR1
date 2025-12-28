@@ -1,32 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TimetableView from "./TimetableView";
-import AssignmentView from "./AssignmentView";
 import { useNavigate } from "react-router-dom";
-import "../styles/Schedule.css";
+import "../styles/SchedulePage.css";
 
 const Schedule = () => {
-  const [activeView, setActiveView] = useState("schedule");
   const navigate = useNavigate();
+  const [academicYears, setAcademicYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState('');
+
+  useEffect(() => {
+    fetchAcademicYears();
+  }, []);
+
+  const fetchAcademicYears = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/api/assignments/academic-years', {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const years = data.data || data || [];
+        setAcademicYears(years);
+        
+        // Auto-select current academic year (trangthai = true)
+        const currentYear = years.find(year => year.trangthai === true);
+        if (currentYear) {
+          setSelectedYear(currentYear.id);
+        }
+      }
+    } catch (err) {
+      console.error('Error fetching academic years:', err);
+    }
+  };
 
   return (
-    <div className="schedule-page">
-      <div className="schedule-header">
-        <h2>Thời khóa biểu & Phân công giảng dạy</h2>
-        <div className="toggle-buttons">
+    <div className="schedule-management-page">
+      <div className="schedule-management-header">
+        <h2>Thời khóa biểu</h2>
+        <div className="schedule-management-filters">
+          <div className="schedule-management-filter-group">
+            <label htmlFor="year-select-header">Năm học:</label>
+            <select
+              id="year-select-header"
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              <option value="">Chọn năm học</option>
+              {academicYears.map(year => (
+                <option key={year.id} value={year.id}>
+                  {year.namhoc} - {year.kyhoc}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="schedule-management-actions">
           <button
-            onClick={() => setActiveView("schedule")}
-            className={`toggle-btn ${activeView === "schedule" ? "active" : ""}`}
-          >
-            Thời khóa biểu
-          </button>
-          <button
-            onClick={() => setActiveView("assign")}
-            className={`toggle-btn ${activeView === "assign" ? "active" : ""}`}
-          >
-            Phân công giảng dạy
-          </button>
-          <button
-            className="schedule-generate-btn"
+            className="schedule-management-generate-btn"
             onClick={() => navigate("/admin/schedule/generate")}
           >
             Tạo TKB mới
@@ -34,9 +68,9 @@ const Schedule = () => {
         </div>
       </div>
 
-      {/* Render theo state chứ không điều hướng */}
-      {activeView === "schedule" && <TimetableView />}
-      {activeView === "assign" && <AssignmentView />}
+      <TimetableView 
+        selectedYear={selectedYear}
+      />
     </div>
   );
 };

@@ -1,75 +1,129 @@
-.schedule-container {
+/* Generate Schedule Component Styles */
+.generate-schedule-container {
   min-height: 100vh;
-  background-color: #f3f4f6;
+  background: #f8f9fa;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 2rem;
 }
 
-.schedule-card {
+.generate-schedule-card {
   background-color: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  max-width: 28rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 3rem;
+  max-width: 42rem;
   width: 100%;
+  backdrop-filter: blur(10px);
 }
 
-.schedule-title {
-  font-size: 1.5rem;
+.generate-schedule-title {
+  font-size: 2rem;
   font-weight: 700;
   color: #1f2937;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-.schedule-description {
-  color: #4b5563;
+.generate-schedule-description {
+  color: #6b7280;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.generate-schedule-form {
+  margin-bottom: 2rem;
+}
+
+.generate-schedule-form-group {
   margin-bottom: 1.5rem;
 }
 
-.schedule-error {
-  background-color: #fee2e2;
-  color: #b91c1c;
-  padding: 0.75rem;
-  border-radius: 0.25rem;
-  margin-bottom: 1rem;
+.generate-schedule-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.75rem;
 }
 
-.schedule-button {
+.generate-schedule-select {
   width: 100%;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  font-weight: 600;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  color: #374151;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+
+.generate-schedule-select option {
+  color: #374151;
+  padding: 0.75rem;
+}
+
+.generate-schedule-error {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  color: #b91c1c;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #b91c1c;
+  font-weight: 500;
+}
+
+.generate-schedule-button {
+  width: 100%;
+  padding: 1.25rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   color: #ffffff;
-  background-color: #2563eb;
+  background: #667eea;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-.schedule-button:hover:not(:disabled) {
-  background-color: #1d4ed8;
+.generate-schedule-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.schedule-button:disabled {
-  background-color: #9ca3af;
+.generate-schedule-button:active {
+  transform: translateY(0);
+}
+
+.generate-schedule-button:disabled {
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
   cursor: not-allowed;
+  transform: none;
 }
 
-.schedule-loading {
+.generate-schedule-loading {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.spinner {
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid #ffffff;
+.generate-schedule-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid #ffffff;
   border-top-color: transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
 }
 
 @keyframes spin {
@@ -78,12 +132,42 @@
   }
 }
 
-@media (max-width: 640px) {
-  .schedule-card {
+
+.generate-schedule-card {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .generate-schedule-container {
     padding: 1rem;
   }
 
-  .schedule-title {
-    font-size: 1.25rem;
+  .generate-schedule-card {
+    padding: 2rem;
+    max-width: 100%;
+    margin: 0 1rem;
+  }
+
+  .generate-schedule-title {
+    font-size: 1.75rem;
+  }
+
+  .generate-schedule-description {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .generate-schedule-card {
+    padding: 1.5rem;
+  }
+
+  .generate-schedule-title {
+    font-size: 1.5rem;
+  }
+
+  .generate-schedule-button {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
   }
 }

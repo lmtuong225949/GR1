@@ -128,3 +128,70 @@ exports.getTeacherName = async (req, res) => {
     res.status(500).json({ error: "Lỗi server" });
   }
 };
+
+// POST /api/teachers/import
+exports.importTeachers = async (req, res) => {
+  try {
+    const { teachers } = req.body;
+
+    if (!teachers || !Array.isArray(teachers) || teachers.length === 0) {
+      return res.status(400).json({ message: "Dữ liệu không hợp lệ" });
+    }
+
+    const client = await db.getClient();
+    
+    try {
+      await client.query('BEGIN');
+      
+      let importedCount = 0;
+      const skippedTeachers = [];
+      
+      for (const teacher of teachers) {
+        const { magv, hoten, chuyennganh, sdt, email, ngaysinh } = teacher;
+        
+        if (!magv || !hoten || !chuyennganh) {
+          skippedTeachers.push({ magv: magv || 'unknown', reason: 'Thiếu thông tin bắt buộc' });
+          continue;
+        }
+        
+        // Kiểm tra giáo viên đã tồn tại chưa
+        const checkQuery = 'SELECT magv FROM giaovien WHERE magv = $1';
+        const checkResult = await client.query(checkQuery, [magv]);
+        
+        if (checkResult.rows.length > 0) {
+          skippedTeachers.push({ magv, reason: 'Mã giáo viên đã tồn tại' });
+          continue;
+        }
+        
+        // Thêm giáo viên mới
+        const insertQuery = `
+          INSERT INTO giaovien (magv, hoten, chuyennganh, sdt, email, ngaysinh)
+          VALUES ($1, $2, $3, $4, $5, $6)
+        `;
+        
+        await client.query(insertQuery, [magv, hoten, chuyennganh, sdt, email, ngaysinh]);
+        importedCount++;
+      }
+      
+      await client.query('COMMIT');
+      
+      res.status(201).json({ 
+        message: "Import giáo viên hoàn tất",
+        imported: importedCount,
+        skipped: skippedTeachers.length,
+        skippedTeachers: skippedTeachers.slice(0, 10), // Chỉ trả về 10 bản ghi bị bỏ qua đầu tiên
+        total: teachers.length
+      });
+      
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+    
+  } catch (err) {
+    console.error("Lỗi import giáo viên:", err);
+    res.status(500).json({ message: "Lỗi máy chủ" });
+  }
+};

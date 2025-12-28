@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../styles/DocumentList.css";
-import { Button } from "../../components/ui/button";
 
 const DocumentList = () => {
   const [docs, setDocs] = useState([]);
@@ -46,30 +45,30 @@ const DocumentList = () => {
       <h2 className="document-list__title">Danh sách tài liệu</h2>
 
       <div className="document-list__filters">
-        <Button
+        <button
           variant={filterType === "all" ? "default" : "outline"}
           onClick={() => setFilterType("all")}
         >
           Tất cả
-        </Button>
-        <Button
+        </button>
+        <button
           variant={filterType === "tailieu" ? "default" : "outline"}
           onClick={() => setFilterType("tailieu")}
         >
           Tài liệu
-        </Button>
-        <Button
+        </button>
+        <button
           variant={filterType === "baigiang" ? "default" : "outline"}
           onClick={() => setFilterType("baigiang")}
         >
           Bài giảng
-        </Button>
-        <Button
+        </button>
+        <button
           variant={filterType === "dethi" ? "default" : "outline"}
           onClick={() => setFilterType("dethi")}
         >
           Đề thi
-        </Button>
+        </button>
       </div>
 
       {loading ? (

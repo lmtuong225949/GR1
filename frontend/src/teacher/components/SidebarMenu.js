@@ -8,9 +8,10 @@ import {
   FaChartBar,
   FaCog,  
   FaSchool,
-  FaBook
+  FaBook,
+  FaPlus
 } from "react-icons/fa";
-import "../../components/ui/styles/SidebarMenu.css";
+import "../styles/SidebarMenu.css";
 
 const SidebarMenu = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -27,6 +28,7 @@ const SidebarMenu = () => {
     { path: "/teacher/schedule", icon: <FaCalendar />, label: "Phân công giảng dạy" },
     { path: "/teacher/grading", icon: <FaClipboardList />, label: "Nhập điểm" },
     { path: "/teacher/reports", icon: <FaChartBar />, label: "Thống kê điểm" },
+    { path: "/teacher/exam/create", icon: <FaPlus />, label: "Tạo đề thi" },
     { path: "/teacher/document", icon: <FaBook />, label: "Quản lý tài liệu" },
     { path: "/teacher/notifications", icon: <FaBell />, label: "Thông báo" },
     { path: "/teacher/settings", icon: <FaCog />, label: "Cài đặt" },

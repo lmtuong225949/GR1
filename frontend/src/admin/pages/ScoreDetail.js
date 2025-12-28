@@ -28,11 +28,8 @@ const ScoreDetail = () => {
       setLoading(true);
       setError(null);
       try {
-        const encodedMahs = encodeURIComponent(mahs);
-        const encodedHocky = encodeURIComponent(hocky);
-        const encodedNamhoc = encodeURIComponent(namhoc);
-
-        const url = `http://localhost:5000/api/scores/${encodedMahs}?hocky=${encodedHocky}&namhoc=${encodedNamhoc}`;
+        // Use the new diem API endpoint
+        const url = `http://localhost:5000/api/scores/diem`;
         const res = await fetch(url);
 
         if (!res.ok) {
@@ -41,7 +38,68 @@ const ScoreDetail = () => {
         }
 
         const data = await res.json();
-        setDetails(data); // Dữ liệu backend đã đúng định dạng
+        
+        // Filter data for specific student and semester/year
+        const filteredData = data.filter(item => 
+          item.mahs === mahs && 
+          item.hocky === hocky && 
+          item.namhoc === namhoc
+        );
+        
+        // Group by subject and calculate averages
+        const subjectData = {};
+        filteredData.forEach(item => {
+          if (item.diems && Array.isArray(item.diems)) {
+            item.diems.forEach(grade => {
+              const subject = grade.tenmon || 'Không xác định';
+              if (!subjectData[subject]) {
+                subjectData[subject] = {
+                  diem15phut: [],
+                  diem1tiet: [],
+                  diemcuoiky: [],
+                  allGrades: []
+                };
+              }
+              
+              // Categorize grades by type (you may need to adjust this based on loaidiemid)
+              if (grade.loaidiemid === 1) { // Assuming 1 = 15 phút
+                subjectData[subject].diem15phut.push(grade.giatri);
+              } else if (grade.loaidiemid === 2) { // Assuming 2 = 1 tiết
+                subjectData[subject].diem1tiet.push(grade.giatri);
+              } else if (grade.loaidiemid === 3) { // Assuming 3 = Cuối kỳ
+                subjectData[subject].diemcuoiky.push(grade.giatri);
+              }
+              
+              subjectData[subject].allGrades.push(grade.giatri);
+            });
+          }
+        });
+        
+        // Convert to array format for display
+        const displayData = Object.entries(subjectData).map(([subject, grades]) => {
+          const avg15phut = grades.diem15phut.length > 0 
+            ? grades.diem15phut.reduce((a, b) => a + b, 0) / grades.diem15phut.length 
+            : null;
+          const avg1tiet = grades.diem1tiet.length > 0 
+            ? grades.diem1tiet.reduce((a, b) => a + b, 0) / grades.diem1tiet.length 
+            : null;
+          const avgcuoiky = grades.diemcuoiky.length > 0 
+            ? grades.diemcuoiky.reduce((a, b) => a + b, 0) / grades.diemcuoiky.length 
+            : null;
+          const avgAll = grades.allGrades.length > 0 
+            ? grades.allGrades.reduce((a, b) => a + b, 0) / grades.allGrades.length 
+            : null;
+            
+          return {
+            monhoc: subject,
+            diem15phut: avg15phut,
+            diem1tiet: avg1tiet,
+            diemcuoiky: avgcuoiky,
+            diemtrungbinh: avgAll
+          };
+        });
+        
+        setDetails(displayData);
       } catch (err) {
         console.error('Error fetching score details:', err);
         setError(`Lỗi khi tải dữ liệu: ${err.message}`);
@@ -87,15 +145,17 @@ const ScoreDetail = () => {
               details.map((item, idx) => (
                 <tr key={idx}>
                   <td>{item.monhoc}</td>
-                  <td>{item.diem15phut !== null ? item.diem15phut : '-'}</td>
-                  <td>{item.diem1tiet !== null ? item.diem1tiet : '-'}</td>
-                  <td>{item.diemcuoiky !== null ? item.diemcuoiky : '-'}</td>
+                  <td>{item.diem15phut !== null ? item.diem15phut.toFixed(2) : '-'}</td>
+                  <td>{item.diem1tiet !== null ? item.diem1tiet.toFixed(2) : '-'}</td>
+                  <td>{item.diemcuoiky !== null ? item.diemcuoiky.toFixed(2) : '-'}</td>
                   <td>{item.diemtrungbinh !== null ? item.diemtrungbinh.toFixed(2) : '-'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ textAlign: 'center' }}>Không có dữ liệu chi tiết</td>
+                <td colSpan="5" style={{ textAlign: 'center' }}>
+                  Không có dữ liệu chi tiết cho học sinh {mahs} trong học kỳ {hocky}, năm học {namhoc}
+                </td>
               </tr>
             )}
           </tbody>

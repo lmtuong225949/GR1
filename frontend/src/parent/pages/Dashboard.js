@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { User, Info, Clock, MapPin, Phone, Mail } from "lucide-react";
-import "../../components/ui/styles/Card.css";
-import "../../components/ui/styles/Button.css";
 import "../styles/Dashboard.css"; 
 
 const ParentDashboard = () => {

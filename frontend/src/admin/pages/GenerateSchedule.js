@@ -1,16 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Button } from 'react-bootstrap';
-import "../styles/Schedule.css";
+import "../styles/GenerateSchedule.css";
 
 const GenerateSchedule = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [academicYears, setAcademicYears] = useState([]);
+  const [selectedYear, setSelectedYear] = useState('');
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    fetchAcademicYears();
+  }, []);
+
+  const fetchAcademicYears = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/api/assignments/academic-years', {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAcademicYears(data.data || data || []);
+      }
+    } catch (err) {
+      console.error('Error fetching academic years:', err);
+    }
+  };
+
   const handleGenerate = async () => {
-    if (!window.confirm("Bạn có chắc muốn tạo thời khóa biểu mới?")) return;
+    if (!selectedYear) {
+      setError('Vui lòng chọn năm học để tạo thời khóa biểu');
+      return;
+    }
+
+    const yearInfo = academicYears.find(y => y.id === selectedYear);
+    
+    if (!window.confirm(`Bạn có chắc muốn tạo thời khóa biểu cho năm học ${yearInfo?.namhoc} - ${yearInfo?.kyhoc}?`)) return;
 
     setLoading(true);
     setError(null);
@@ -23,6 +55,9 @@ const GenerateSchedule = () => {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
+        body: JSON.stringify({
+          namhoc_id: selectedYear,
+        })
       });
 
       const contentType = response.headers.get("content-type");
@@ -55,7 +90,7 @@ const GenerateSchedule = () => {
   };
 
   return (
-    <div className="schedule-container">
+    <div className="generate-schedule-container">
       <Modal show={showSuccessModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Thành công</Modal.Title>
@@ -73,21 +108,42 @@ const GenerateSchedule = () => {
         </Modal.Footer>
       </Modal>
 
-      <div className="schedule-card">
-        <h2 className="schedule-title">Tạo Thời Khóa Biểu Mới</h2>
-        <p className="schedule-description">
-          Nhấn nút bên dưới để sinh thời khóa biểu tự động dựa trên các ràng buộc.
+      <div className="generate-schedule-card">
+        <h2 className="generate-schedule-title">Tạo Thời Khóa Biểu Theo Học Kỳ</h2>
+        <p className="generate-schedule-description">
+          Chọn năm học và học kỳ để tạo thời khóa biểu tự động dựa trên các phân công giảng dạy của học kỳ đó.
         </p>
-        {error && <div className="schedule-error">{error}</div>}
+        
+        <div className="generate-schedule-form">
+          <div className="generate-schedule-form-group">
+            <label className="generate-schedule-label">Năm học:</label>
+            <select 
+              value={selectedYear} 
+              onChange={(e) => setSelectedYear(e.target.value)}
+              className="generate-schedule-select"
+              required
+            >
+              <option value="">Chọn năm học</option>
+              {academicYears.map(year => (
+                <option key={year.id} value={year.id}>
+                  {year.namhoc} - {year.kyhoc}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {error && <div className="generate-schedule-error">{error}</div>}
+        
         <button
-          className="schedule-button"
+          className="generate-schedule-button"
           onClick={handleGenerate}
-          disabled={loading}
+          disabled={loading || !selectedYear}
         >
           {loading ? (
-            <div className="schedule-loading">
-              <span className="spinner"></span>
-              Đang tạo...
+            <div className="generate-schedule-loading">
+              <span className="generate-schedule-spinner"></span>
+              Đang tạo thời khóa biểu...
             </div>
           ) : (
             "Tạo Thời Khóa Biểu"

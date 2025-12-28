@@ -17,7 +17,7 @@ import Grading from "../teacher/pages/Grading";
 import StudentListByClass from "../teacher/pages/StudentListByClass";
 import DocumentList from "../teacher/pages/DocumentList";
 import DocumentCreate from "../teacher/pages/Creater";
-
+import CreateExam from "../teacher/pages/CreateExam";
 const TeacherRoutes = () => {
   // Lấy user từ localStorage
   const userStr = localStorage.getItem("user");
@@ -41,6 +41,7 @@ const TeacherRoutes = () => {
         <Route path="classes/:malop" element={<ClassScores />} />
         <Route path="profile" element={<TeacherProfile />} />
         <Route path="scores/:mahs" element={<ScoreDetailPage />} />
+        <Route path="score-detail" element={<ScoreDetailPage />} />
         <Route path="settings" element={<Settings />} />
         <Route path="notifications" element={<Notifications />} />  
         <Route path="reports" element={<TeacherReportPage />} />
@@ -49,6 +50,7 @@ const TeacherRoutes = () => {
         <Route path="grading/:lopid" element={<StudentListByClass />} />
         <Route path="document" element={<DocumentList />} />
         <Route path="document/create" element={<DocumentCreate />} />
+        <Route path="exam/create" element={<CreateExam />} />
         {/* Nếu không tìm thấy route con, chuyển về dashboard */}
         <Route path="*" element={<Navigate to="/teacher" replace />} />
       </Route>

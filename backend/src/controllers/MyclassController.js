@@ -42,15 +42,16 @@ const getScoresByClass = async (req, res) => {
       SELECT 
         hs.mahs,
         hs.hoten,
-        kq.hocky,
-        kq.namhoc,
-        AVG(kq.diemtrungbinh) as diemtrungbinh,
-        kq.nhanxet
-      FROM ketquahoctap kq
-      JOIN hocsinh hs ON kq.mahs = hs.mahs
-      WHERE hs.lopid = $1
-      GROUP BY hs.mahs, hs.hoten, kq.hocky, kq.namhoc, kq.nhanxet
-      ORDER BY hs.hoten, kq.namhoc, kq.hocky;
+        nh.kyhoc as hocky,
+        nh.namhoc,
+        COALESCE(ROUND(kqht.diemtrungbinh::numeric, 2), 0) as diemtrungbinh,
+        COALESCE(kqht.nhanxet, 'Không có') as nhanxet
+      FROM hocsinh hs
+      LEFT JOIN ketquahoctap kqht ON hs.mahs = kqht.mahs
+      LEFT JOIN namhoc nh ON kqht.namhoc_id = nh.id
+      WHERE hs.lopid = $1 
+        AND kqht.diemtrungbinh IS NOT NULL
+      ORDER BY hs.hoten, nh.namhoc, nh.kyhoc;
     `;
 
     const { rows } = await db.query(query, [malop]);
@@ -87,7 +88,6 @@ const getScoreDistributionByClass = async (req, res) => {
     }
 
     // Sử dụng width_bucket để phân nhóm điểm thành 10 khoảng, mỗi khoảng 1 điểm (0-1, 1-2, ...)
-    // Nếu DB chưa hỗ trợ hoặc muốn giữ CASE thì dùng CASE như bạn làm
     const query = `
       SELECT
         CASE 
@@ -107,19 +107,21 @@ const getScoreDistributionByClass = async (req, res) => {
       FROM (
         SELECT
           hs.mahs,
-          width_bucket(AVG(kq.diemtrungbinh), 0, 10, 10) - 1 AS bucket
-        FROM ketquahoctap kq
-        JOIN hocsinh hs ON kq.mahs = hs.mahs
-        WHERE hs.lopid = $1 AND kq.hocky = $2 AND kq.namhoc = $3
-        GROUP BY hs.mahs
+          width_bucket(COALESCE(kqht.diemtrungbinh, 0), 0, 10, 10) - 1 AS bucket
+        FROM hocsinh hs
+        LEFT JOIN ketquahoctap kqht ON hs.mahs = kqht.mahs
+        LEFT JOIN namhoc nh ON kqht.namhoc_id = nh.id
+        WHERE hs.lopid = $1 
+          AND nh.kyhoc = $2 
+          AND nh.namhoc = $3
+          AND kqht.diemtrungbinh IS NOT NULL
+        GROUP BY hs.mahs, kqht.diemtrungbinh
       ) sub
       GROUP BY bucket
       ORDER BY bucket;
     `;
 
     const { rows } = await db.query(query, [malop, hocky, namhoc]);
-
-    // Nếu muốn trả luôn mảng đầy đủ khoảng (để front-end luôn có đủ label), có thể bổ sung sau
 
     return res.json(rows);
   } catch (err) {
@@ -161,9 +163,161 @@ const updateScore = async (req, res) => {
 };
 
 
+const getDetailedScoresByClass = async (req, res) => {
+  try {
+    const { malop } = req.params;
+    const { hocky, namhoc } = req.query;
+
+    if (!malop || !hocky || !namhoc) {
+      return res.status(400).json({ message: "Thiếu mã lớp, học kỳ hoặc năm học" });
+    }
+
+    // Lấy điểm chi tiết theo từng môn cho học sinh trong lớp
+    const query = `
+      SELECT 
+        hs.mahs,
+        hs.hoten,
+        nh.kyhoc as hocky,
+        nh.namhoc,
+        COALESCE(kqht.diemtrungbinh, 0) as diemtrungbinh,
+        COALESCE(kqht.nhanxet, 'Không có') as nhanxet,
+        m.tenmon,
+        d.giatri as diemgiatri,
+        d.lanthu,
+        ld.tenloaidiem,
+        ld.heso
+      FROM hocsinh hs
+      LEFT JOIN ketquahoctap kqht ON hs.mahs = kqht.mahs
+      LEFT JOIN namhoc nh ON kqht.namhoc_id = nh.id
+      LEFT JOIN diem d ON hs.mahs = d.mahs AND d.namhoc_id = kqht.namhoc_id
+      LEFT JOIN monhoc m ON d.monid = m.id
+      LEFT JOIN loaidiem ld ON d.loaidiemid = ld.id
+      WHERE hs.lopid = $1 
+        AND nh.kyhoc = $2 
+        AND nh.namhoc = $3
+      ORDER BY hs.hoten, m.tenmon, ld.tenloaidiem, d.lanthu;
+    `;
+
+    const { rows } = await db.query(query, [malop, hocky, namhoc]);
+
+    // Group data by student
+    const studentData = {};
+    
+    rows.forEach(row => {
+      if (!studentData[row.mahs]) {
+        studentData[row.mahs] = {
+          mahs: row.mahs,
+          hoten: row.hoten,
+          hocky: row.hocky,
+          namhoc: row.namhoc,
+          diemtrungbinh: row.diemtrungbinh,
+          nhanxet: row.nhanxet,
+          subjects: {}
+        };
+      }
+
+      // Group subjects
+      if (row.tenmon) {
+        if (!studentData[row.mahs].subjects[row.tenmon]) {
+          studentData[row.mahs].subjects[row.tenmon] = {
+            monhoc: row.tenmon,
+            diemmieng: null,
+            diem15phut: null,
+            diem1tiet: null,
+            diemcuoaky: null,
+            diemtrungbinh: null,
+            allGrades: []
+          };
+        }
+
+        // Add grade to subject
+        const gradeType = row.tenloaidiem?.toLowerCase() || '';
+        const gradeValue = parseFloat(row.diemgiatri);
+        
+        if (!isNaN(gradeValue) && gradeValue !== null && gradeValue !== undefined) {
+          studentData[row.mahs].subjects[row.tenmon].allGrades.push({
+            value: gradeValue,
+            lanthu: row.lanthu,
+            heso: row.heso || 1
+          });
+
+          // Categorize grades by type
+          if (gradeType.includes('miệng') || gradeType.includes('mouth') || gradeType.includes('oral')) {
+            if (!studentData[row.mahs].subjects[row.tenmon].diemmieng || 
+                parseFloat(studentData[row.mahs].subjects[row.tenmon].diemmieng) < gradeValue) {
+              studentData[row.mahs].subjects[row.tenmon].diemmieng = gradeValue;
+            }
+          } else if (gradeType.includes('15') || gradeType.includes('15 phút')) {
+            if (!studentData[row.mahs].subjects[row.tenmon].diem15phut || 
+                parseFloat(studentData[row.mahs].subjects[row.tenmon].diem15phut) < gradeValue) {
+              studentData[row.mahs].subjects[row.tenmon].diem15phut = gradeValue;
+            }
+          } else if (gradeType.includes('1 tiết') || gradeType.includes('giữa kỳ')) {
+            if (!studentData[row.mahs].subjects[row.tenmon].diem1tiet || 
+                parseFloat(studentData[row.mahs].subjects[row.tenmon].diem1tiet) < gradeValue) {
+              studentData[row.mahs].subjects[row.tenmon].diem1tiet = gradeValue;
+            }
+          } else if (gradeType.includes('cuối kỳ')) {
+            if (!studentData[row.mahs].subjects[row.tenmon].diemcuoaky || 
+                parseFloat(studentData[row.mahs].subjects[row.tenmon].diemcuoaky) < gradeValue) {
+              studentData[row.mahs].subjects[row.tenmon].diemcuoaky = gradeValue;
+            }
+          }
+        }
+      }
+    });
+
+    // Calculate subject averages and convert to array
+    const result = Object.values(studentData).map(student => {
+      const subjects = Object.values(student.subjects).map(subject => {
+        // Calculate weighted average for subject
+        const grades = subject.allGrades;
+        let avgSubject = null;
+        
+        if (grades.length > 0) {
+          let weightedSum = 0;
+          let totalWeight = 0;
+          
+          grades.forEach(grade => {
+            weightedSum += grade.value * grade.heso;
+            totalWeight += grade.heso;
+          });
+          
+          if (totalWeight > 0) {
+            avgSubject = weightedSum / totalWeight;
+          }
+        }
+
+        return {
+          monhoc: subject.monhoc,
+          diemmieng: subject.diemmieng,
+          diem15phut: subject.diem15phut,
+          diem1tiet: subject.diem1tiet,
+          diemcuoaky: subject.diemcuoaky,
+          diemtrungbinh: avgSubject
+        };
+      });
+
+      return {
+        ...student,
+        subjects: subjects
+      };
+    });
+
+    return res.json({ success: true, data: result });
+  } catch (err) {
+    console.error("Lỗi khi lấy điểm chi tiết theo lớp:", err);
+    return res.status(500).json({ 
+      message: "Lỗi máy chủ", 
+      error: err.message 
+    });
+  }
+};
+
 module.exports = {
   getMyClass,
   getScoresByClass,
   updateScore,
   getScoreDistributionByClass,
+  getDetailedScoresByClass,
 };

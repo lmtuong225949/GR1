@@ -15,7 +15,7 @@ const Scores = () => {
     const fetchScores = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("http://localhost:5000/api/scores");
+        const response = await axios.get("http://localhost:5000/api/scores/diem");
         console.log("Dữ liệu kết quả học tập:", response.data);
         if (Array.isArray(response.data)) {
           setScores(response.data);
@@ -37,12 +37,14 @@ const Scores = () => {
   }, []);
 
   useEffect(() => {
-    const lowerSearchName = searchName.toLowerCase();
-    const lowerSearchClass = searchClass.toLowerCase();
+    const lowerSearchName = searchName ? searchName.toLowerCase() : '';
+    const lowerSearchClass = searchClass ? searchClass.toLowerCase() : '';
 
     const filtered = scores.filter((s) => {
-      const matchesName = s.name.toLowerCase().includes(lowerSearchName);
-      const matchesClass = s.class.toLowerCase().includes(lowerSearchClass);
+      const studentName = s.hoten || '';
+      const studentClass = s.tenlop || '';
+      const matchesName = studentName.toLowerCase().includes(lowerSearchName);
+      const matchesClass = studentClass.toLowerCase().includes(lowerSearchClass);
       return matchesName && matchesClass;
     });
 
@@ -110,8 +112,8 @@ const Scores = () => {
           {filteredScores.map((s) => (
             <tr key={s.id}>
               <td>{s.mahs}</td>
-              <td>{s.name}</td>
-              <td>{s.class}</td>
+              <td>{s.hoten}</td>
+              <td>{s.tenlop}</td>
               <td>{s.hocky}</td>
               <td>{s.namhoc}</td>
               <td>{isFinite(Number(s.diemtrungbinh)) ? Number(s.diemtrungbinh).toFixed(2) : "-"}</td>

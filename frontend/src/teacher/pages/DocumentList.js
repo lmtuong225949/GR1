@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../styles/DocumentList.css";
-import { Input } from "../../components/ui/input";
-import { Button } from "../../components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 const DocumentList = () => {
@@ -109,36 +107,36 @@ const DocumentList = () => {
       <h2 className="document-list__title">Danh sách tài liệu</h2>
 
       <div className="document-list__actions">
-        <Button onClick={() => navigate("/teacher/document/create")}>
+        <button onClick={() => navigate("/teacher/document/create")}>
           + Tải lên tài liệu mới
-        </Button>
+        </button>
       </div>
 
       <div className="document-list__filters">
-        <Button
+        <button
           variant={filterType === "all" ? "default" : "outline"}
           onClick={() => setFilterType("all")}
         >
           Tất cả
-        </Button>
-        <Button
+        </button>
+        <button
           variant={filterType === "tailieu" ? "default" : "outline"}
           onClick={() => setFilterType("tailieu")}
         >
           Tài liệu
-        </Button>
-        <Button
+        </button>
+        <button
           variant={filterType === "baigiang" ? "default" : "outline"}
           onClick={() => setFilterType("baigiang")}
         >
           Bài giảng
-        </Button>
-        <Button
+        </button>
+        <button
           variant={filterType === "dethi" ? "default" : "outline"}
           onClick={() => setFilterType("dethi")}
         >
           Đề thi
-        </Button>
+        </button>
       </div>
 
       {loading ? (
@@ -151,7 +149,7 @@ const DocumentList = () => {
             <li key={doc.id} className="document-list__item">
               <div className="document-list__info">
                 {editId === doc.id ? (
-                  <Input
+                  <input
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
                     className="document-list__input"
@@ -177,13 +175,13 @@ const DocumentList = () => {
               <div className="document-list__controls">
                 {editId === doc.id ? (
                   <>
-                    <Button size="sm" onClick={() => handleRename(doc.id)}>Lưu</Button>
-                    <Button size="sm" variant="secondary" onClick={() => setEditId(null)}>Huỷ</Button>
+                    <button size="sm" onClick={() => handleRename(doc.id)}>Lưu</button>
+                    <button size="sm" variant="secondary" onClick={() => setEditId(null)}>Huỷ</button>
                   </>
                 ) : (
-                  <Button size="sm" onClick={() => { setEditId(doc.id); setEditTitle(doc.title); }}>
+                  <button size="sm" onClick={() => { setEditId(doc.id); setEditTitle(doc.title); }}>
                     Sửa tên
-                  </Button>
+                  </button>
                 )}
 
                 <div className="document-list__file-container">
@@ -213,13 +211,13 @@ const DocumentList = () => {
                   )}
                 </div>
 
-                <Button size="sm" onClick={() => handleReplace(doc.id)} disabled={!fileMap[doc.id]}>
+                <button size="sm" onClick={() => handleReplace(doc.id)} disabled={!fileMap[doc.id]}>
                   Thay file
-                </Button>
+                </button>
 
-                <Button size="sm" variant="destructive" onClick={() => handleDelete(doc.id)}>
+                <button size="sm" variant="destructive" onClick={() => handleDelete(doc.id)}>
                   Xoá
-                </Button>
+                </button>
               </div>
             </li>
           ))}

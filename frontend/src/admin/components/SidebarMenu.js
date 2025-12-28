@@ -12,7 +12,9 @@ import {
   FaChalkboardTeacher,
   FaSchool,
   FaUserShield,
-  FaBook
+  FaBook,
+  FaUser,
+  FaUserEdit
 } from "react-icons/fa";
 
 const SidebarMenu = () => {
@@ -35,6 +37,8 @@ const SidebarMenu = () => {
     { path: "/admin/notifications", icon: <FaBell />, label: "Thông báo" },
     { path: "/admin/reports", icon: <FaChartBar />, label: "Báo cáo - Thống kê" },
     { path: "/admin/users", icon: <FaUserShield />, label: "Tài khoản người dùng" },
+    { path: "/admin/student-promotion", icon: <FaUser />, label: "Xử lý lên lớp" },
+    { path: "/admin/teacher-assignment", icon: <FaUserEdit />, label: "Phân công giáo viên" },
     { path: "/admin/settings", icon: <FaCog />, label: "Cài đặt" },
   ];
 

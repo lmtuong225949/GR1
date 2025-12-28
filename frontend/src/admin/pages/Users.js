@@ -28,7 +28,6 @@ const RoleModal = ({ currentRole, onSave, onCancel }) => {
           <option value="admin">Quản trị viên</option>
           <option value="teacher">Giáo viên</option>
           <option value="student">Học sinh</option>
-          <option value="librarian">Thủ thư</option>
           <option value="parent">Phụ huynh</option>
         </select>
         <div className="users-modal-buttons">
@@ -56,7 +55,7 @@ const AddUserModal = ({ onSave, onCancel }) => {
   
     const roleLower = role.toLowerCase();
   
-    if (!['admin', 'teacher', 'student', 'librarian', 'parent'].includes(roleLower)) {
+    if (!['admin', 'teacher', 'student', 'parent'].includes(roleLower)) {
       return alert("Vai trò không hợp lệ.");
     }
   
@@ -66,8 +65,6 @@ const AddUserModal = ({ onSave, onCancel }) => {
       return alert("Vui lòng nhập mã giáo viên (giaovienid).");
     } else if (roleLower === "admin" && !bgh) {
       return alert("Vui lòng nhập ID ban giám hiệu (bgh).");
-    } else if (roleLower === "librarian" && !bgh) {
-      return alert("Vui lòng nhập ID thủ thư.");
     } else if (roleLower === "parent" && !maphuhuynh) {
       return alert("Vui lòng nhập mã phụ huynh (maphuhuynh).");
     }
@@ -82,7 +79,6 @@ const AddUserModal = ({ onSave, onCancel }) => {
       ...(roleLower === 'student' && { mahs: mahs.trim() }),
       ...(roleLower === 'teacher' && { giaovienid: originalGiaovienid }),
       ...(roleLower === 'admin' && { bgh: parseInt(bgh.trim()) }),
-      ...(roleLower === 'librarian' && { bgh: parseInt(bgh.trim()) }),
       ...(roleLower === 'parent' && {maphuhuynh: maphuhuynh.trim()})
     };
   
@@ -119,7 +115,6 @@ const AddUserModal = ({ onSave, onCancel }) => {
           <option value="admin">Quản trị viên</option>
           <option value="teacher">Giáo viên</option>
           <option value="student">Học sinh</option>
-          <option value="librarian">Thủ thư</option>
           <option value="parent">Phụ huynh</option>
         </select>
 
@@ -151,18 +146,6 @@ const AddUserModal = ({ onSave, onCancel }) => {
             }}
           />
         )}
-        {role === "librarian" && (
-          <input
-            type="number"
-            placeholder="ID Thủ thư (bgh)"
-            value={bgh}
-            onChange={(e) => {
-              const value = e.target.value;
-              const cleanValue = value.replace(/[^0-9]/g, '');
-              setBgh(cleanValue);
-            }}
-          />
-        )}
         {role === "parent" && (
           <input
             type="number"
@@ -171,10 +154,11 @@ const AddUserModal = ({ onSave, onCancel }) => {
             onChange={(e) => {
               const value = e.target.value;
               const cleanValue = value.replace(/[^0-9]/g, '');
-              setMaphuhuynh(cleanValue);
+              setBgh(cleanValue);
             }}
           />
         )}
+
 
         <div className="add-user-modal-buttons">
           <button onClick={handleSubmit}>Thêm</button>
@@ -303,9 +287,6 @@ export default function Users() {
       if (roleLower === "admin" && !newUser.bgh) {
         return alert("Thiếu ID ban giám hiệu");
       }
-      if (roleLower === "librarian" && !newUser.bgh) {
-        return alert("Thiếu ID thủ thư");
-      }
       if (roleLower === "parent" && !newUser.maphuhuynh?.trim()) {
         return alert("Thiếu mã phụ huynh");
       }
@@ -318,7 +299,6 @@ export default function Users() {
         ...(roleLower === 'student' && { mahs: newUser.mahs.trim() }),
         ...(roleLower === 'teacher' && { giaovienid: newUser.giaovienid.trim() }),
         ...(roleLower === 'admin' && { bgh: Number(newUser.bgh) }),
-        ...(roleLower === 'librarian' && { bgh: Number(newUser.bgh) }),
         ...(roleLower === 'parent' && { maphuhuynh: newUser.maphuhuynh.trim() })
       };
       
@@ -388,7 +368,6 @@ export default function Users() {
               <option value="teacher">Giáo viên</option>
               <option value="student">Học sinh</option>
               <option value="parent">Phụ huynh</option>
-              <option value="librarian">Thủ thư</option>
             </select>
           </div>
           <button onClick={() => setShowAddModal(true)} className="add-user-btn">

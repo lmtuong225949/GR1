@@ -20,4 +20,7 @@ router.delete('/delete/:magv', teachersController.deleteTeacher);
 // GET /api/teachers/:magv
 router.get('/:magv', teachersController.getTeacherName);
 
+// POST /api/teachers/import
+router.post('/import', teachersController.importTeachers);
+
 module.exports = router;

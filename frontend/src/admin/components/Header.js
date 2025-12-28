@@ -48,7 +48,7 @@ const Header = ({ username = "Admin", onLogout }) => {
       <div className="header-top">
         <div className="logo"><img src="/TTHG school.png" alt="TTHG school" /></div>
         <div className="name">
-          <h1>TRƯỜNG THPT TRÂN ĐẠI NGHĨA</h1>
+          <h1>TRƯỜNG THPT TRẦN ĐẠI NGHĨA</h1>
         </div>
       </div>
 

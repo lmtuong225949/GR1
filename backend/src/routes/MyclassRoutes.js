@@ -5,9 +5,11 @@ const { getMyClass } = require("../controllers/MyclassController");
 const { getScoresByClass } = require("../controllers/MyclassController");
 const { updateScore } = require("../controllers/MyclassController");
 const { getScoreDistributionByClass } = require("../controllers/MyclassController");
+const { getDetailedScoresByClass } = require("../controllers/MyclassController");
 
 router.get("/", auth, getMyClass);
 router.get("/:malop/scores", auth, getScoresByClass);
+router.get("/:malop/detailed-scores", auth, getDetailedScoresByClass);
 router.put("/:mahs/:hocky/:namhoc", auth, updateScore);
 router.get("/:malop/scoresto", auth, getScoreDistributionByClass);
 module.exports = router;

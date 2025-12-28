@@ -19,6 +19,8 @@ import AdminProfile from "../admin/pages/AdminProfile";
 import ScoreDetail from "../admin/pages/ScoreDetail";
 import DocumentCreate from "../admin/pages/Creater";
 import DocumentList from "../admin/pages/DocumentList";
+import StudentPromotion from "../admin/pages/StudentPromotion";
+import TeacherAssignment from "../admin/pages/TeacherAssignment";
 
 const AdminRoutes = () => {
   // Lấy user từ localStorage
@@ -53,7 +55,8 @@ const AdminRoutes = () => {
         <Route path="scores/:mahs" element={<ScoreDetail />} />
         <Route path="document" element={<DocumentList />} />
         <Route path="document/create" element={<DocumentCreate />} /> 
-
+        <Route path="student-promotion" element={<StudentPromotion />} />
+        <Route path="teacher-assignment" element={<TeacherAssignment/>} />
         {/* Nếu không tìm thấy route con, chuyển về dashboard */}
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>

@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import "../styles/Creacter.css";
-import { Card, CardContent } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
-import { Button } from "../../components/ui/button";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -41,12 +38,12 @@ const UploadForm = ({ title, type }) => {
   };
 
   return (
-    <Card className="upload-form p-4 mt-4">
-      <CardContent>
+    <div className="upload-form p-4 mt-4">
+      <div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" encType="multipart/form-data">
           <div>
             <label className="block mb-1 font-medium">Tên file</label>
-            <Input
+            <input
               type="text"
               {...register("filename", { required: true })}
               placeholder={`Nhập tên ${title.toLowerCase()}`}
@@ -54,21 +51,21 @@ const UploadForm = ({ title, type }) => {
           </div>
           <div>
             <label className="block mb-1 font-medium">Chọn file</label>
-            <Input
+            <input
               type="file"
               accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar"
               {...register("file", { required: true })}
             />
           </div>
-          <Button type="submit">Tải lên {title}</Button>
+          <button type="submit">Tải lên {title}</button>
         </form>
         {message && (
           <p className={`text-sm mt-2 ${messageType === "success" ? "text-green-600" : "text-red-600"}`}>
             {message}
           </p>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
@@ -80,9 +77,9 @@ const DocumentCreate = () => {
     <div className="teacher-learning">
       <div className="teacher-learning-header">
         <div className="flex justify-between items-center mb-4">
-          <Button variant="secondary" onClick={() => navigate(-1)}>
+          <button onClick={() => navigate(-1)}>
             Quay lại
-          </Button>
+          </button>
           <h2 className="text-xl font-semibold">Tải lên tài liệu mới</h2>
         </div>
         <div className="toggle-buttons space-x-2">
